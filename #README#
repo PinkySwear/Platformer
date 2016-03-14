@@ -1,0 +1,14 @@
+README
+
+a - left
+d - right
+space - jump
+s - crouch
+left mouse - attack
+
+enemies will walk left and right until they see player
+enemies will see a player when facing within 5 units away, below horizontal line of sight
+will chase player until they lose sight of him
+
+enemies sometimes dont turn around
+cannot interact with other things

@@ -15,6 +15,11 @@ public class DogControls : MonoBehaviour {
 	private bool crouching = false;
 	private bool nearEnemy = false;
 	private EnemyBehavior nearestEnemy;
+	public bool beginCutScene = false;
+	public int killNPC = 0;
+	public bool hasKey = false;
+	public bool notDecided = true;
+	public bool enterNewRoom = false;
 
 	// Use this for initialization
 	void Start () {
@@ -42,34 +47,50 @@ public class DogControls : MonoBehaviour {
 
 		movingLeft = false;
 		movingRight = false;
+		if(!beginCutScene){
+			if (Input.GetKey (KeyCode.A)) {
+				movingLeft = true;
+				Vector3 s = transform.localScale;
+				s.x = -2;
+				transform.localScale = s;
+			}
+			if (Input.GetKey (KeyCode.D)) {
+				movingRight = true;
+				Vector3 s = transform.localScale;
+				s.x = 2;
+				transform.localScale = s;
+			}
 
-		if (Input.GetKey (KeyCode.A)) {
-			movingLeft = true;
-			Vector3 s = transform.localScale;
-			s.x = -2;
-			transform.localScale = s;
-		}
-		if (Input.GetKey (KeyCode.D)) {
-			movingRight = true;
-			Vector3 s = transform.localScale;
-			s.x = 2;
-			transform.localScale = s;
-		}
+			if (Input.GetKeyDown(KeyCode.Space) && onSomething && !crouching)
+			{
+				jump = true;
+			}
+			if (Input.GetKey (KeyCode.S)) {
+				crouching = true;
+			}
+			if (!Input.GetKey (KeyCode.S) && !underSomething) {
+				crouching = false;
+			}
 
-		if (Input.GetKeyDown(KeyCode.Space) && onSomething && !crouching)
-		{
-			jump = true;
+			if (Input.GetMouseButtonDown (0)) {
+				if (nearEnemy) {
+					nearestEnemy.isDead = true;
+				}
+			}
 		}
-		if (Input.GetKey (KeyCode.S)) {
-			crouching = true;
-		}
-		if (!Input.GetKey (KeyCode.S) && !underSomething) {
-			crouching = false;
-		}
-
-		if (Input.GetMouseButtonDown (0)) {
-			if (nearEnemy) {
-				nearestEnemy.isDead = true;
+		else{
+			if (Input.GetKey (KeyCode.K)) {
+				crouching = true;
+				Debug.Log("KILL");
+				killNPC = 2;
+			}
+			if (Input.GetKey (KeyCode.H)) {
+				crouching = false;
+				Debug.Log("SAVE");
+				killNPC = 1;
+			}
+			if (Input.GetKey (KeyCode.D)) {
+				enterNewRoom = true;
 			}
 		}
 	}

@@ -48,6 +48,23 @@
      <Compile Include="Assets\Scripts\CameraControl.cs" />
      <Compile Include="Assets\Scripts\DogControls.cs" />
      <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\EndBeacon.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\EnemyDefense.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\IntVector2.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\Maze.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\MazeCell.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\MazeCellEdge.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\MazeDirection.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\MazePassage.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\MazeWall.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\Player.cs" />
+     <Compile Include="Assets\Scripts\NPCControl.cs" />
+     <Compile Include="Assets\Scripts\NextRoom.cs" />
+     <Compile Include="Assets\Scripts\PickUpScripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\PickUpScripts\PickUpObject.cs" />
+     <Compile Include="Assets\Scripts\PickUpScripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PickUpScripts\Rotator.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
