@@ -45,6 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\FieldOfView2D\Scripts\FOV2DEyes.cs" />
+     <Compile Include="Assets\FieldOfView2D\Scripts\FOV2DVisionCone.cs" />
+     <Compile Include="Assets\FieldOfView2D\Scripts\SampleScript\GuardSample.cs" />
      <Compile Include="Assets\Scripts\CameraControl.cs" />
      <Compile Include="Assets\Scripts\DogControls.cs" />
      <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
@@ -58,13 +61,13 @@
      <Compile Include="Assets\Scripts\MazeScripts\MazeDirection.cs" />
      <Compile Include="Assets\Scripts\MazeScripts\MazePassage.cs" />
      <Compile Include="Assets\Scripts\MazeScripts\MazeWall.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\PickUpScripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\PickUpScripts\PickUpObject.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\PickUpScripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\MazeScripts\PickUpScripts\Rotator.cs" />
      <Compile Include="Assets\Scripts\MazeScripts\Player.cs" />
      <Compile Include="Assets\Scripts\NPCControl.cs" />
      <Compile Include="Assets\Scripts\NextRoom.cs" />
-     <Compile Include="Assets\Scripts\PickUpScripts\CameraController.cs" />
-     <Compile Include="Assets\Scripts\PickUpScripts\PickUpObject.cs" />
-     <Compile Include="Assets\Scripts\PickUpScripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\PickUpScripts\Rotator.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -13,13 +13,16 @@ public class DogControls : MonoBehaviour {
 	private bool movingRight;
 	private bool jump = false;
 	private bool crouching = false;
-	private bool nearEnemy = false;
+	public bool nearEnemy = false;
 	private EnemyBehavior nearestEnemy;
 	public bool beginCutScene = false;
 	public int killNPC = 0;
 	public bool hasKey = false;
 	public bool notDecided = true;
 	public bool enterNewRoom = false;
+
+	public int myHealth;
+	public bool isDead;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +31,9 @@ public class DogControls : MonoBehaviour {
 		myRb = GetComponent<Rigidbody> ();
 		myRb.freezeRotation = true;
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dog"), LayerMask.NameToLayer("Interactable"));
+		myHealth = 5;
+		isDead = false;
+		nearEnemy = false;
 	}
 
 	void Update() {
@@ -74,7 +80,7 @@ public class DogControls : MonoBehaviour {
 
 			if (Input.GetMouseButtonDown (0)) {
 				if (nearEnemy) {
-					nearestEnemy.isDead = true;
+					nearestEnemy.takeDamage(1);
 				}
 			}
 		}
@@ -118,11 +124,8 @@ public class DogControls : MonoBehaviour {
 
 		if (jump) {
 			myRb.AddForce (Vector3.up * jumpForce);
-//			Vector3 jumpDir = Vector3.up + (myRb.velocity.x / velocity * Vector3.right);
-//			myRb.AddForce (jumpDir * jumpForce);
 			jump = false;
 		}
-//		if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
 		if (!movingRight && !movingLeft) {
 			myRb.velocity = new Vector3(0f, myRb.velocity.y, myRb.velocity.z);
 		}
@@ -135,7 +138,6 @@ public class DogControls : MonoBehaviour {
 			if (!nearestEnemy.isDead) {
 				nearEnemy = true;
 			}
-
 		}
 	}
 
@@ -143,6 +145,14 @@ public class DogControls : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			nearEnemy = false;
 			nearestEnemy = null;
+		}
+	}
+
+	public void takeDamage(int dm) {
+		myHealth -= dm;
+		if (myHealth == 0) {
+			isDead = true;
+			Debug.Log ("DOG IS DEAD");
 		}
 	}
 }
