@@ -20,6 +20,7 @@ public class DogControls : MonoBehaviour {
 	public bool hasKey = false;
 	public bool notDecided = true;
 	public bool enterNewRoom = false;
+	public bool isObserved = false;
 
 	public int myHealth;
 	public bool isDead;
