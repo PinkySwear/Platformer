@@ -132,7 +132,6 @@ public class EnemyBehavior : MonoBehaviour {
 
 
 
-
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Dog") {
 			Debug.Log ("gothere");
