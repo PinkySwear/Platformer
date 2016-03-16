@@ -7,8 +7,8 @@ public class EnemyBehavior : MonoBehaviour {
 	private int direction;
 	private Rigidbody myRb;
 	public GameObject dog;
-	private bool seesDog = false;
-	private Renderer myRend;
+	public bool seesDog = false;
+	//private Renderer myRend;
 	private float speed;
 	public float initialSpeed;
 	private float dogAngle;
@@ -40,7 +40,7 @@ public class EnemyBehavior : MonoBehaviour {
 		speed = initialSpeed;
 		myRb = GetComponent<Rigidbody> ();
 		myRb.freezeRotation = true;
-		myRend = GetComponent<Renderer> ();
+		//myRend = GetComponent<Renderer> ();
 		if (myType == 0) {
 			health = 2;
 		}
@@ -60,7 +60,7 @@ public class EnemyBehavior : MonoBehaviour {
 			RaycastHit rh;
 			Vector3 eyePosition = transform.position + Vector3.up * 0.666f;
 			Vector3 dogDirection = dog.transform.position - eyePosition;
-
+			//Debug.Log(attentionCountdown);
 			if (seesDog) {
 				dogAngle = 181f;
 				speed = 9f;
@@ -91,12 +91,15 @@ public class EnemyBehavior : MonoBehaviour {
 			seesDog = false;
 			if (Vector3.Distance (dog.transform.position, transform.position) < 2f) {
 				seesDog = true;
+				dogC.isObserved = true;
 			}
 			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
 				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable")))) {
 					if (rh.collider.tag == "Dog") {
 //						Debug.Log ("I SAW THE FUCKING DOG");
 						seesDog = true;
+						dogC.isObserved = true;
+						//Debug.Log("SEEN!");
 					}
 				}
 			}
@@ -126,6 +129,7 @@ public class EnemyBehavior : MonoBehaviour {
 		}
 		else {
 			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
+			dogC.isObserved = false;
 		}
 
 	}
