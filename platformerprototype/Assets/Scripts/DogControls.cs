@@ -24,6 +24,8 @@ public class DogControls : MonoBehaviour {
 	public int myHealth;
 	public bool isDead;
 
+	private AudioSource biteSound;
+
 	// Use this for initialization
 	void Start () {
 		velocity = 10f;
@@ -34,6 +36,7 @@ public class DogControls : MonoBehaviour {
 		myHealth = 5;
 		isDead = false;
 		nearEnemy = false;
+		biteSound = GetComponent<AudioSource> ();
 	}
 
 	void Update() {
@@ -79,8 +82,10 @@ public class DogControls : MonoBehaviour {
 			}
 
 			if (Input.GetMouseButtonDown (0)) {
+				biteSound.Play ();
 				if (nearEnemy) {
 					nearestEnemy.takeDamage(1);
+
 				}
 			}
 		}

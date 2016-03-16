@@ -7,7 +7,7 @@ public class NPCControl : MonoBehaviour {
 	public int NPC;
 	public GameObject dog;
 	public GameObject textbox;
-	public float letterPause = 0.01f;
+	public float letterPause = 0.001f;
 	public AudioClip sound;
 	private DogControls nearestEnemy;
  
@@ -82,9 +82,10 @@ public class NPCControl : MonoBehaviour {
 	IEnumerator TypeText () {
 		foreach (char letter in message.ToCharArray()) {
 			textbox.GetComponent<Text>().text += letter;
-			if (sound)
-				GetComponent<AudioSource>().PlayOneShot (sound);
+			if (sound) {
+				GetComponent<AudioSource> ().PlayOneShot (sound);
 				yield return 0;
+			}
 			yield return new WaitForSeconds (letterPause);
 			Debug.Log(letter);
 		}
