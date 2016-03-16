@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\DogControls.cs" />
      <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
      <Compile Include="Assets\Scripts\LevelController.cs" />
+     <Compile Include="Assets\Scripts\LightSoundControl.cs" />
      <Compile Include="Assets\Scripts\MazeScripts\EndBeacon.cs" />
      <Compile Include="Assets\Scripts\MazeScripts\EnemyDefense.cs" />
      <Compile Include="Assets\Scripts\MazeScripts\GameManager.cs" />
