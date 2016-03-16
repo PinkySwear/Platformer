@@ -151,6 +151,18 @@ public class DogControls : MonoBehaviour {
 				nearEnemy = true;
 			}
 		}
+		if (other.gameObject.tag == "Key") {
+			Debug.Log ("bumped key");
+			hasKey = true;
+			Destroy (other.gameObject);
+		}
+		if (other.gameObject.tag == "Door") {
+			Debug.Log ("bumped door");
+			if (hasKey) {
+				Destroy (other.gameObject);
+				hasKey = false;
+			}
+		}
 	}
 
 	void OnTriggerExit(Collider other) {
