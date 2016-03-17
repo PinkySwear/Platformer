@@ -21,6 +21,10 @@ public class DogControls : MonoBehaviour {
 	public bool notDecided = true;
 	public bool enterNewRoom = false;
 	public bool isObserved = false;
+	public Texture jumpSprite;
+	public Texture crouchSprite;
+	public Texture idleSprite;
+	public Texture walkSprite;
 
 //	public Vector3 lastCheckpoint;
 
@@ -39,6 +43,8 @@ public class DogControls : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 //		myInfo = infoObj.GetComponent<PlayerInfo> ();
+		GetComponent<Renderer>().material.mainTexture = walkSprite;
+
 		if (infoObj == null) {
 			infoObj = GameObject.Find ("PlayerInfo");
 		}
@@ -107,12 +113,24 @@ public class DogControls : MonoBehaviour {
 
 				if (Input.GetKeyDown (KeyCode.Space) && onSomething && !crouching) {
 					jump = true;
+					GetComponent<Renderer>().material.mainTexture = jumpSprite;
 				}
+				
+				if (!Input.GetKeyDown (KeyCode.Space) && !onSomething) {
+					//GetComponent<Renderer>().material.mainTexture = walkSprite;
+				}
+				
 				if (Input.GetKey (KeyCode.S)) {
 					crouching = true;
+					GetComponent<Renderer>().material.mainTexture = crouchSprite;
 				}
-				if (!Input.GetKey (KeyCode.S) && !underSomething) {
+				if (!Input.GetKey (KeyCode.S) && !underSomething && onSomething) {
 					crouching = false;
+					GetComponent<Renderer>().material.mainTexture = walkSprite;
+				}
+				
+				if (!Input.GetKey (KeyCode.S) && !underSomething && !onSomething) {
+					GetComponent<Renderer>().material.mainTexture = jumpSprite;
 				}
 
 				if (Input.GetMouseButtonDown (0)) {
@@ -166,6 +184,7 @@ public class DogControls : MonoBehaviour {
 
 			if (crouching) {
 				transform.localScale = new Vector3 (transform.localScale.x, 0.5f, 1f);
+				
 				velocity = 5f;
 			}
 			else {
