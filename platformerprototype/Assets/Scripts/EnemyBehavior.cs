@@ -100,7 +100,7 @@ public class EnemyBehavior : MonoBehaviour {
 				dogC.observedArray[num-1] = false;
 			}
 			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
-				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable")))) {
+				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 <<LayerMask.NameToLayer("Enemy")))) {
 					if (rh.collider.tag == "Dog") {
 						Debug.Log ("I SAW THE FUCKING DOG");
 						seesDog = true;

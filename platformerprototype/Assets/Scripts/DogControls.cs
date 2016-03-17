@@ -62,7 +62,7 @@ public class DogControls : MonoBehaviour {
 		myRb = GetComponent<Rigidbody> ();
 		myRb.freezeRotation = true;
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dog"), LayerMask.NameToLayer("Interactable"));
-		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Interactable"), LayerMask.NameToLayer("Interactable"));
+		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
 		myHealth = 5;
 		isDead = false;
 		nearEnemy = false;
@@ -94,8 +94,8 @@ public class DogControls : MonoBehaviour {
 			Debug.DrawLine (right, right + (Vector3.up * 0.76f));
 			Debug.DrawLine (left, left + (Vector3.up * 0.76f));
 
-			onSomething = Physics.Linecast (right, right + (Vector3.down * transform.lossyScale.y * 0.5f), 1 << LayerMask.NameToLayer ("Obstacle"))
-			|| Physics.Linecast (left, left + (Vector3.down * transform.lossyScale.y * 0.5f), 1 << LayerMask.NameToLayer ("Obstacle"));
+			onSomething = Physics.Linecast (right, right + (Vector3.down * transform.lossyScale.y * 0.5f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"))
+				|| Physics.Linecast (left, left + (Vector3.down * transform.lossyScale.y * 0.5f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"));
 		
 			underSomething = Physics.Linecast (right, right + (Vector3.up * 0.76f), 1 << LayerMask.NameToLayer ("Obstacle"))
 			|| Physics.Linecast (left, left + (Vector3.up * 0.76f), 1 << LayerMask.NameToLayer ("Obstacle"));
