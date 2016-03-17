@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DogControls : MonoBehaviour {
 
+	Animator anim;
+
 
 	public float velocity;
 	public float jumpForce;
@@ -43,8 +45,10 @@ public class DogControls : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		anim = GetComponent<Animator>();
 //		myInfo = infoObj.GetComponent<PlayerInfo> ();
-		GetComponent<Renderer>().material.mainTexture = walkSprite;
+//		GetComponent<Renderer>().material.mainTexture = walkSprite;
 
 		if (infoObj == null) {
 			infoObj = GameObject.Find ("PlayerInfo");
@@ -100,6 +104,9 @@ public class DogControls : MonoBehaviour {
 			underSomething = Physics.Linecast (right, right + (Vector3.up * 0.76f), 1 << LayerMask.NameToLayer ("Obstacle"))
 			|| Physics.Linecast (left, left + (Vector3.up * 0.76f), 1 << LayerMask.NameToLayer ("Obstacle"));
 
+
+
+
 			movingLeft = false;
 			movingRight = false;
 			if (!beginCutScene) {
@@ -118,20 +125,20 @@ public class DogControls : MonoBehaviour {
 
 				if (Input.GetKeyDown (KeyCode.Space) && onSomething && !crouching) {
 					jump = true;
-					GetComponent<Renderer>().material.mainTexture = jumpSprite;
+//					GetComponent<Renderer>().material.mainTexture = jumpSprite;
 				}
 				
 				if (Input.GetKey (KeyCode.S)) {
 					crouching = true;
-					GetComponent<Renderer>().material.mainTexture = crouchSprite;
+//					GetComponent<Renderer>().material.mainTexture = crouchSprite;
 				}
 				if (!Input.GetKey (KeyCode.S) && !underSomething && onSomething) {
 					crouching = false;
-					GetComponent<Renderer>().material.mainTexture = walkSprite;
+//					GetComponent<Renderer>().material.mainTexture = walkSprite;
 				}
 				
 				if (!Input.GetKey (KeyCode.S) && !underSomething && !onSomething) {
-					GetComponent<Renderer>().material.mainTexture = jumpSprite;
+//					GetComponent<Renderer>().material.mainTexture = jumpSprite;
 				}
 
 				if (Input.GetMouseButtonDown (0)) {
@@ -148,6 +155,7 @@ public class DogControls : MonoBehaviour {
 						healthKits--;
 					}
 				}
+
 			}
 			else {
 				if (Input.GetKey (KeyCode.K)) {
@@ -168,6 +176,11 @@ public class DogControls : MonoBehaviour {
 		else {
 			transform.rotation = Quaternion.Euler (0f, 0f, 180f);
 		}
+		anim.SetBool ("Ground", onSomething);
+		anim.SetFloat ("vSpeed", myRb.velocity.y);
+		anim.SetFloat ("Speed", Mathf.Abs (myRb.velocity.x));
+		anim.SetBool ("isCrawling", crouching);
+		anim.SetBool ("isJumping", jump);
 	}
 
 	// Update is called once per frame
@@ -184,12 +197,12 @@ public class DogControls : MonoBehaviour {
 			}
 
 			if (crouching) {
-				transform.localScale = new Vector3 (transform.localScale.x, 0.5f, 1f);
+				transform.localScale = new Vector3 (transform.localScale.x, 2f, 1f);
 				
 				velocity = 5f;
 			}
 			else {
-				transform.localScale = new Vector3 (transform.localScale.x, 1f, 1f);
+				transform.localScale = new Vector3 (transform.localScale.x, 2f, 1f);
 				velocity = 10f;
 			}
 

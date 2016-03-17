@@ -1,0 +1,808 @@
+fileFormatVersion: 2
+guid: 8192d4cc29783453395ec02fa73d0129
+timeCreated: 1458240116
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Dog Spritesheet_0
+    21300002: Dog Spritesheet_1
+    21300004: Dog Spritesheet_2
+    21300006: Dog Spritesheet_3
+    21300008: Dog Spritesheet_4
+    21300010: Dog Spritesheet_5
+    21300012: Dog Spritesheet_6
+    21300014: Dog Spritesheet_7
+    21300016: Dog Spritesheet_8
+    21300018: Dog Spritesheet_9
+    21300020: Dog Spritesheet_10
+    21300022: Dog Spritesheet_11
+    21300024: Dog Spritesheet_12
+    21300026: Dog Spritesheet_13
+    21300028: Dog Spritesheet_14
+    21300030: Dog Spritesheet_15
+    21300032: Dog Spritesheet_16
+    21300034: Dog Spritesheet_17
+    21300036: Dog Spritesheet_18
+    21300038: Dog Spritesheet_19
+    21300040: Dog Spritesheet_20
+    21300042: Dog Spritesheet_21
+    21300044: Dog Spritesheet_22
+    21300046: Dog Spritesheet_23
+    21300048: Dog Spritesheet_24
+    21300050: Dog Spritesheet_25
+    21300052: Dog Spritesheet_26
+    21300054: Dog Spritesheet_27
+    21300056: Dog Spritesheet_28
+    21300058: Dog Spritesheet_29
+    21300060: Dog Spritesheet_30
+    21300062: Dog Spritesheet_31
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 200
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Dog Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -53, y: 28}
+        - {x: -85, y: 8}
+        - {x: -85, y: -15}
+        - {x: -72, y: -29}
+        - {x: -2, y: -60}
+        - {x: 82, y: -60}
+        - {x: 100, y: -19}
+        - {x: 100, y: 28}
+    - name: Dog Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 20, y: -40}
+        - {x: 18, y: -31}
+        - {x: 21, y: -40}
+        - {x: 30, y: -49}
+        - {x: 57, y: -49}
+        - {x: 63, y: -46}
+        - {x: 97, y: -4}
+        - {x: 97, y: 29}
+        - {x: 85, y: 47}
+        - {x: 57, y: 47}
+        - {x: 54, y: 44}
+        - {x: -85, y: 34}
+        - {x: -85, y: -2}
+        - {x: -16, y: -60}
+        - {x: 20, y: -60}
+        - {x: 24, y: -59}
+        - {x: 27, y: -54}
+        - {x: 27, y: -49}
+        - {x: 23, y: -44}
+    - name: Dog Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 53, y: 47}
+        - {x: 48, y: 43}
+        - {x: -85, y: 27}
+        - {x: -85, y: -40}
+        - {x: -81, y: -60}
+        - {x: 97, y: -60}
+        - {x: 97, y: 39}
+        - {x: 66, y: 47}
+    - name: Dog Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 58, y: 45}
+        - {x: 49, y: 43}
+        - {x: -73, y: 30}
+        - {x: -85, y: 27}
+        - {x: -85, y: -58}
+        - {x: -79, y: -60}
+        - {x: 94, y: -60}
+        - {x: 94, y: 29}
+        - {x: 66, y: 45}
+    - name: Dog Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 72, y: 41}
+        - {x: -85, y: 41}
+        - {x: -85, y: -35}
+        - {x: -70, y: -40}
+        - {x: -13, y: -56}
+        - {x: 79, y: -56}
+        - {x: 100, y: -5}
+        - {x: 100, y: 24}
+        - {x: 97, y: 27}
+    - name: Dog Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -53, y: 28}
+        - {x: -85, y: 8}
+        - {x: -85, y: -15}
+        - {x: -72, y: -29}
+        - {x: -2, y: -60}
+        - {x: 82, y: -60}
+        - {x: 100, y: -19}
+        - {x: 100, y: 28}
+    - name: Dog Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 38, y: 39}
+        - {x: -85, y: -14}
+        - {x: -85, y: -51}
+        - {x: -75, y: -60}
+        - {x: 100, y: -60}
+        - {x: 100, y: 39}
+    - name: Dog Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 360
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 46, y: 60}
+        - {x: -78, y: 5}
+        - {x: -85, y: -4}
+        - {x: -85, y: -36}
+        - {x: -69, y: -55}
+        - {x: -8, y: -55}
+        - {x: 95, y: -20}
+        - {x: 100, y: 5}
+        - {x: 100, y: 48}
+        - {x: 78, y: 60}
+    - name: Dog Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 95, y: 60}
+        - {x: 35, y: 60}
+        - {x: -29, y: 48}
+        - {x: -85, y: 30}
+        - {x: -85, y: 3}
+        - {x: -78, y: -35}
+        - {x: 90, y: -35}
+        - {x: 100, y: -25}
+        - {x: 100, y: 57}
+    - name: Dog Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -85, y: -25}
+        - {x: -67, y: -34}
+        - {x: 100, y: -34}
+        - {x: 100, y: 48}
+        - {x: 81, y: 59}
+        - {x: 36, y: 59}
+        - {x: -7, y: 53}
+        - {x: -85, y: 36}
+    - name: Dog Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 100, y: 27}
+        - {x: 90, y: 46}
+        - {x: 71, y: 46}
+        - {x: 70, y: 44}
+        - {x: -51, y: 46}
+        - {x: -85, y: 46}
+        - {x: -85, y: -38}
+        - {x: 50, y: -60}
+        - {x: 78, y: -60}
+        - {x: 83, y: -56}
+        - {x: 84, y: -47}
+        - {x: 100, y: -8}
+    - name: Dog Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 100, y: 27}
+        - {x: -53, y: 27}
+        - {x: -85, y: 7}
+        - {x: -85, y: -28}
+        - {x: -19, y: -60}
+        - {x: 66, y: -60}
+        - {x: 66, y: -55}
+        - {x: 64, y: -52}
+        - {x: 100, y: -10}
+    - name: Dog Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 97, y: 26}
+        - {x: -20, y: 26}
+        - {x: -85, y: 9}
+        - {x: -85, y: -16}
+        - {x: -74, y: -31}
+        - {x: -3, y: -60}
+        - {x: 82, y: -60}
+        - {x: 100, y: -16}
+        - {x: 100, y: 23}
+    - name: Dog Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 40, y: 39}
+        - {x: -85, y: -14}
+        - {x: -85, y: -60}
+        - {x: 100, y: -60}
+        - {x: 100, y: 39}
+    - name: Dog Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 82, y: 27}
+        - {x: 93, y: 30}
+        - {x: 97, y: 36}
+        - {x: 97, y: 60}
+        - {x: 54, y: 60}
+        - {x: -30, y: 8}
+        - {x: -83, y: -2}
+        - {x: -85, y: -3}
+        - {x: -85, y: -26}
+        - {x: -79, y: -45}
+        - {x: -67, y: -59}
+        - {x: 11, y: -59}
+        - {x: 97, y: -26}
+        - {x: 97, y: 14}
+        - {x: 96, y: 17}
+        - {x: 88, y: 25}
+        - {x: 75, y: 26}
+    - name: Dog Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 240
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -85, y: 45}
+        - {x: -85, y: -60}
+        - {x: 97, y: -60}
+        - {x: 100, y: -29}
+        - {x: 100, y: 34}
+        - {x: 91, y: 45}
+      - - {x: 79, y: 8}
+        - {x: 79, y: 2}
+        - {x: 85, y: 2}
+        - {x: 85, y: 6}
+        - {x: 84, y: 8}
+      - - {x: 87, y: 11}
+        - {x: 87, y: 6}
+        - {x: 89, y: 5}
+        - {x: 93, y: 5}
+        - {x: 93, y: 11}
+    - name: Dog Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 100, y: 14}
+        - {x: 82, y: 27}
+        - {x: -15, y: 27}
+        - {x: -85, y: 10}
+        - {x: -85, y: -27}
+        - {x: -18, y: -60}
+        - {x: 66, y: -60}
+        - {x: 66, y: -55}
+        - {x: 64, y: -52}
+        - {x: 100, y: -8}
+      - - {x: 80, y: -18}
+        - {x: 83, y: -17}
+        - {x: 83, y: -14}
+        - {x: 80, y: -13}
+        - {x: 78, y: -15}
+      - - {x: 79, y: 24}
+        - {x: 80, y: 21}
+        - {x: 83, y: 21}
+        - {x: 85, y: 23}
+        - {x: 84, y: 26}
+        - {x: 81, y: 26}
+      - - {x: 75, y: 32}
+        - {x: 74, y: 30}
+        - {x: 74, y: 27}
+        - {x: 76, y: 26}
+        - {x: 79, y: 26}
+        - {x: 80, y: 27}
+        - {x: 80, y: 32}
+    - name: Dog Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22, y: -60}
+        - {x: 26, y: -56}
+        - {x: 31, y: -60}
+        - {x: 85, y: -60}
+        - {x: 100, y: -11}
+        - {x: 100, y: 34}
+        - {x: 94, y: 40}
+        - {x: 57, y: 40}
+        - {x: -19, y: 3}
+        - {x: -75, y: -37}
+        - {x: -75, y: -57}
+        - {x: -66, y: -60}
+        - {x: -4, y: -60}
+        - {x: -4, y: -55}
+        - {x: -6, y: -50}
+        - {x: 5, y: -60}
+    - name: Dog Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8, y: -43}
+        - {x: -6, y: -51}
+        - {x: 4, y: -60}
+        - {x: 24, y: -60}
+        - {x: 17, y: -48}
+        - {x: 28, y: -60}
+        - {x: 89, y: -60}
+        - {x: 100, y: -23}
+        - {x: 100, y: 22}
+        - {x: 88, y: 41}
+        - {x: 64, y: 41}
+        - {x: -24, y: 0}
+        - {x: -77, y: -31}
+        - {x: -78, y: -33}
+        - {x: -78, y: -41}
+        - {x: -65, y: -52}
+        - {x: -49, y: -50}
+        - {x: -37, y: -44}
+        - {x: -27, y: -35}
+        - {x: -29, y: -40}
+        - {x: -29, y: -44}
+        - {x: -22, y: -59}
+        - {x: -20, y: -60}
+        - {x: -4, y: -60}
+        - {x: -4, y: -55}
+        - {x: -6, y: -51}
+        - {x: -11, y: -50}
+    - name: Dog Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 62, y: -60}
+        - {x: 81, y: -60}
+        - {x: 83, y: -52}
+        - {x: 79, y: -50}
+        - {x: 100, y: -14}
+        - {x: 100, y: 27}
+        - {x: 92, y: 41}
+        - {x: 56, y: 41}
+        - {x: -79, y: -24}
+        - {x: -81, y: -28}
+        - {x: -81, y: -33}
+        - {x: -72, y: -44}
+        - {x: -49, y: -47}
+        - {x: -37, y: -39}
+        - {x: -31, y: -33}
+        - {x: -31, y: -45}
+        - {x: -22, y: -60}
+        - {x: 52, y: -60}
+        - {x: 52, y: -59}
+        - {x: 53, y: -53}
+    - name: Dog Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 100, y: 32}
+        - {x: 90, y: 40}
+        - {x: 17, y: 40}
+        - {x: -79, y: -26}
+        - {x: -79, y: -58}
+        - {x: -74, y: -60}
+        - {x: 81, y: -60}
+        - {x: 83, y: -52}
+        - {x: 100, y: -5}
+    - name: Dog Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 81, y: -60}
+        - {x: 84, y: -52}
+        - {x: 100, y: -20}
+        - {x: 100, y: 23}
+        - {x: 90, y: 41}
+        - {x: 63, y: 41}
+        - {x: -31, y: 4}
+        - {x: -39, y: -23}
+        - {x: -39, y: -57}
+        - {x: -35, y: -60}
+        - {x: 25, y: -60}
+        - {x: 26, y: -56}
+        - {x: 12, y: -42}
+        - {x: 32, y: -60}
+    - name: Dog Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -36, y: 41}
+        - {x: -84, y: -8}
+        - {x: -84, y: -36}
+        - {x: -65, y: -50}
+        - {x: -40, y: -60}
+        - {x: 84, y: -60}
+        - {x: 100, y: -50}
+        - {x: 100, y: 41}
+    - name: Dog Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 120
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 93, y: -60}
+        - {x: 100, y: -22}
+        - {x: 100, y: 26}
+        - {x: 82, y: 40}
+        - {x: 37, y: 40}
+        - {x: -75, y: -22}
+        - {x: -75, y: -50}
+        - {x: -68, y: -60}
+        - {x: -2, y: -60}
+        - {x: -6, y: -50}
+        - {x: 4, y: -60}
+    - name: Dog Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 92, y: -4}
+        - {x: -39, y: -4}
+        - {x: -98, y: -19}
+        - {x: -98, y: -60}
+        - {x: 89, y: -60}
+        - {x: 100, y: -41}
+        - {x: 100, y: -14}
+    - name: Dog Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 66, y: -4}
+        - {x: -33, y: -6}
+        - {x: -98, y: -47}
+        - {x: -98, y: -60}
+        - {x: 98, y: -60}
+        - {x: 100, y: -49}
+        - {x: 100, y: -19}
+        - {x: 71, y: -4}
+    - name: Dog Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13, y: -6}
+        - {x: -40, y: -7}
+        - {x: -100, y: -35}
+        - {x: -100, y: -49}
+        - {x: -66, y: -60}
+        - {x: 85, y: -60}
+        - {x: 100, y: -41}
+        - {x: 100, y: -11}
+        - {x: 86, y: -6}
+    - name: Dog Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 100, y: -7}
+        - {x: 98, y: -6}
+        - {x: -18, y: -6}
+        - {x: -76, y: -13}
+        - {x: -100, y: -35}
+        - {x: -100, y: -50}
+        - {x: -36, y: -60}
+        - {x: 76, y: -60}
+        - {x: 93, y: -53}
+        - {x: 100, y: -43}
+    - name: Dog Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61, y: -4}
+        - {x: -96, y: -44}
+        - {x: -96, y: -60}
+        - {x: 72, y: -60}
+        - {x: 100, y: -46}
+        - {x: 100, y: -6}
+        - {x: 87, y: -4}
+    - name: Dog Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 74, y: -56}
+        - {x: 71, y: -52}
+        - {x: 95, y: -37}
+        - {x: 100, y: -32}
+        - {x: 100, y: -19}
+        - {x: 72, y: -4}
+        - {x: 13, y: -4}
+        - {x: -50, y: -9}
+        - {x: -96, y: -49}
+        - {x: -96, y: -60}
+        - {x: -7, y: -60}
+        - {x: -7, y: -59}
+        - {x: -1, y: -60}
+        - {x: 72, y: -60}
+    - name: Dog Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -40, y: -6}
+        - {x: -68, y: -8}
+        - {x: -100, y: -43}
+        - {x: -100, y: -58}
+        - {x: -93, y: -60}
+        - {x: 92, y: -60}
+        - {x: 100, y: -58}
+        - {x: 100, y: -20}
+        - {x: 77, y: -6}
+    - name: Dog Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 0
+        width: 200
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -34, y: -6}
+        - {x: -100, y: -23}
+        - {x: -100, y: -56}
+        - {x: -85, y: -60}
+        - {x: 71, y: -60}
+        - {x: 100, y: -36}
+        - {x: 100, y: -24}
+        - {x: 88, y: -6}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
