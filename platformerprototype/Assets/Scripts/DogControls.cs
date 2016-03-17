@@ -55,6 +55,7 @@ public class DogControls : MonoBehaviour {
 		myRb = GetComponent<Rigidbody> ();
 		myRb.freezeRotation = true;
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dog"), LayerMask.NameToLayer("Interactable"));
+		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Interactable"), LayerMask.NameToLayer("Interactable"));
 		myHealth = 5;
 		isDead = false;
 		nearEnemy = false;
