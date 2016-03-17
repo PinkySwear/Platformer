@@ -139,6 +139,7 @@ public class EnemyBehavior : MonoBehaviour {
 		else {
 			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
 			dogC.observedArray[num-1] = true;
+			gameObject.layer = 9;
 		}
 
 	}
