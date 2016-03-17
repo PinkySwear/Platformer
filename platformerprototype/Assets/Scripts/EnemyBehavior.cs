@@ -20,7 +20,6 @@ public class EnemyBehavior : MonoBehaviour {
 	public float attentionSpan;
 	private float attentionCountdown;
 	public int num;
-
 	public int myType;
 	public int health;
 
@@ -88,6 +87,7 @@ public class EnemyBehavior : MonoBehaviour {
 					speed = initialSpeed;
 					dogDistance = initialDogDistance;
 					notice.GetComponent<MeshRenderer>().enabled = false;
+					dogC.observedArray[num-1] = true;
 				}
 				else {
 					speed = 0f;
@@ -97,14 +97,14 @@ public class EnemyBehavior : MonoBehaviour {
 			seesDog = false;
 			if (Vector3.Distance (dog.transform.position, transform.position) < 2f) {
 				seesDog = true;
-				dogC.isObserved = true;
+				dogC.observedArray[num-1] = false;
 			}
 			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
 				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable")))) {
 					if (rh.collider.tag == "Dog") {
 						Debug.Log ("I SAW THE FUCKING DOG");
 						seesDog = true;
-						dogC.isObserved = true;
+						dogC.observedArray[num-1] = false;
 						notice.GetComponent<MeshRenderer>().enabled = true;
 						Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
 						notice.transform.position = temp;
@@ -138,7 +138,7 @@ public class EnemyBehavior : MonoBehaviour {
 		}
 		else {
 			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
-			dogC.isObserved = false;
+			dogC.observedArray[num-1] = true;
 		}
 
 	}

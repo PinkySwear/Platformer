@@ -25,6 +25,7 @@ public class DogControls : MonoBehaviour {
 	public Texture crouchSprite;
 	public Texture idleSprite;
 	public Texture walkSprite;
+	public bool[] observedArray;
 
 //	public Vector3 lastCheckpoint;
 
@@ -80,6 +81,10 @@ public class DogControls : MonoBehaviour {
 
 	void Update() {
 		Debug.Log (myInfo.timeElapsed);
+		isObserved = observedArray[0];
+		for(int i = 1; i < observedArray.Length; i++) {
+			isObserved = observedArray[i] && isObserved;
+		}
 		if (!isDead) {
 			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.5f;
 			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.5f;

@@ -31,13 +31,13 @@ public class LightSoundControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (dogC.isObserved){
+		if (!dogC.isObserved){
 			//RenderSettings.ambientLight = Color.Lerp (Color.blue, Color.red,changeTime*Time.deltaTime);
 			StartCoroutine(PlayEvery(0.1f));
 			ShowHealth(true);
 		}
 
-		if (!dogC.isObserved && fromAttack){
+		if (dogC.isObserved && fromAttack){
 			//RenderSettings.ambientLight = Color.Lerp (Color.red, Color.blue,changeTime*Time.deltaTime);
 			StartCoroutine(PlayEvery(0.1f));
 			ShowHealth(false);
@@ -50,7 +50,7 @@ public class LightSoundControl : MonoBehaviour {
 		wait = true;
 		yield return new WaitForSeconds(seconds);
 		wait = false;
-		if (fromAttack && !dogC.isObserved){
+		if (dogC.isObserved){
 			aSources[0].volume -= 0.05f;
 			aSources[1].volume += 0.05f;
 			if(ogBlue <= 1f){
@@ -62,7 +62,7 @@ public class LightSoundControl : MonoBehaviour {
 				fromAttack = false;
 			}
 		}
-		else if(!fromAttack && dogC.isObserved){
+		else if(!dogC.isObserved){
 			Debug.Log(aSources[0].volume);
 			aSources[1].volume -= 0.05f;
 			aSources[0].volume += 0.05f;
