@@ -20,6 +20,7 @@ public class LightSoundControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		textbox.GetComponent<Text>().text = "";
+		Debug.Log(RenderSettings.ambientLight.b);
 		RenderSettings.ambientLight = new Color (ogRed,0f,ogBlue,0f);
 		
 		aSources = gameObject.GetComponents<AudioSource>();
