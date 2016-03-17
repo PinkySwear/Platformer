@@ -22,6 +22,15 @@ public class DogControls : MonoBehaviour {
 	public bool enterNewRoom = false;
 	public bool isObserved = false;
 
+//	public Vector3 lastCheckpoint;
+
+	public GameObject infoObj;
+	private PlayerInfo myInfo;
+
+	public GameObject initialSpawn;
+
+	public int healthKits;
+
 	public int myHealth;
 	public bool isDead;
 
@@ -29,18 +38,41 @@ public class DogControls : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		velocity = 10f;
-		jumpForce = 1000f;
+//		myInfo = infoObj.GetComponent<PlayerInfo> ();
+		if (infoObj == null) {
+			infoObj = GameObject.Find ("PlayerInfo");
+		}
+		myInfo = infoObj.GetComponent<PlayerInfo> ();
+		Debug.Log (myInfo.lastCheckPoint);
+		Debug.Log (myInfo.timeElapsed);
+		if (myInfo.lastCheckPoint == Vector3.zero) {
+			Debug.Log ("setting spawn to level start");
+			myInfo.lastCheckPoint = initialSpawn.transform.position;
+		}
+		Debug.Log (myInfo.lastCheckPoint);
+		velocity = 8f;
+		jumpForce = 950f;
 		myRb = GetComponent<Rigidbody> ();
 		myRb.freezeRotation = true;
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dog"), LayerMask.NameToLayer("Interactable"));
 		myHealth = 5;
 		isDead = false;
 		nearEnemy = false;
+		healthKits = 0;
 		biteSound = GetComponent<AudioSource> ();
+
+//		transform.position = lastCheckpoint;
+
+
+		transform.position = myInfo.lastCheckPoint;
 	}
 
+//	void Awake() {
+//		DontDestroyOnLoad (transform.gameObject);
+//	}
+
 	void Update() {
+		Debug.Log (myInfo.timeElapsed);
 		if (!isDead) {
 			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.5f;
 			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.5f;
@@ -87,6 +119,13 @@ public class DogControls : MonoBehaviour {
 					if (nearEnemy) {
 						nearestEnemy.takeDamage (1);
 
+					}
+				}
+
+				if (Input.GetKey (KeyCode.E)) {
+					if (healthKits > 0) {
+						myHealth = Mathf.Min(myHealth + 2, 5);
+						healthKits--;
 					}
 				}
 			}
@@ -152,16 +191,16 @@ public class DogControls : MonoBehaviour {
 			}
 		}
 		if (other.gameObject.tag == "Key") {
-			Debug.Log ("bumped key");
 			hasKey = true;
 			Destroy (other.gameObject);
 		}
-		if (other.gameObject.tag == "Door") {
-			Debug.Log ("bumped door");
-			if (hasKey) {
-				Destroy (other.gameObject);
-				hasKey = false;
-			}
+		if (other.gameObject.tag == "Health") {
+			Destroy (other.gameObject);
+			healthKits++;
+		}
+		if (other.gameObject.tag == "Checkpoint") {
+			myInfo.lastCheckPoint = other.gameObject.transform.position;
+//			lastCheckpoint = other.gameObject.transform.position;
 		}
 	}
 
