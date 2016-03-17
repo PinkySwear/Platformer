@@ -40,7 +40,7 @@ public class NextRoom : MonoBehaviour {
 		if(seesDog){
 			nearestEnemy = dog.GetComponent<DogControls> ();
 			nearestEnemy.beginCutScene = true;
-			if(nearestEnemy.enterNewRoom){
+			if(nearestEnemy.enterHack == 1){
 				SceneManager.LoadScene ("Basic Maze");
 			}
 		}
