@@ -1,0 +1,305 @@
+fileFormatVersion: 2
+guid: 20d9eed43aa3945e98bf83c3926be876
+timeCreated: 1458158905
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: dog ear
+    21300002: dog idle parts sheet_1
+    21300004: dog head
+    21300006: dog neck
+    21300008: dog FLeg B
+    21300010: dog FLeg F
+    21300012: dog jaw
+    21300014: dog body
+    21300016: dog idle parts sheet_8
+    21300018: dog tail3
+    21300020: dog tail2
+    21300022: dog tail1
+    21300024: dog BLeg B
+    21300026: dog BLeg F
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: dog ear
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 141
+        width: 10
+        height: 21
+      alignment: 9
+      pivot: {x: 0.4999999, y: 0.38146245}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: dog idle parts sheet_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 140
+        width: 10
+        height: 23
+      alignment: 9
+      pivot: {x: 0.49999982, y: 0.35118368}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: dog head
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 141
+        width: 35
+        height: 21
+      alignment: 9
+      pivot: {x: 0.162169, y: 0.45554823}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: dog neck
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 105
+        width: 47
+        height: 52
+      alignment: 9
+      pivot: {x: 0.5264816, y: 0.54188687}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 2.2553635, y: 23.821884}
+        - {x: -9.744637, y: 14.821884}
+        - {x: -24.744637, y: -1.1781158}
+        - {x: -24.744637, y: -19.178116}
+        - {x: -19.744637, y: -28.178116}
+        - {x: 10.255363, y: -28.178116}
+        - {x: 19.255363, y: -25.178116}
+        - {x: 22.255363, y: -8.178116}
+        - {x: 22.255363, y: 20.821884}
+        - {x: 17.255363, y: 23.821884}
+    - name: dog FLeg B
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 89
+        width: 37
+        height: 61
+      alignment: 9
+      pivot: {x: 0.6597851, y: 0.7397461}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8.412048, y: 15.875488}
+        - {x: -21.412048, y: 2.8754883}
+        - {x: -24.412048, y: -4.1245117}
+        - {x: -24.412048, y: -45.12451}
+        - {x: 1.5879517, y: -45.12451}
+        - {x: 12.587952, y: -9.124512}
+        - {x: 12.587952, y: 15.875488}
+    - name: dog FLeg F
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 85
+        width: 38
+        height: 69
+      alignment: 9
+      pivot: {x: 0.36898524, y: 0.7164592}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14.021439, y: 19.564316}
+        - {x: -14.021439, y: -18.435684}
+        - {x: -3.0214386, y: -49.435684}
+        - {x: 23.978561, y: -49.435684}
+        - {x: 23.978561, y: -17.435684}
+        - {x: 10.978561, y: 19.564316}
+    - name: dog jaw
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 123
+        width: 33
+        height: 17
+      alignment: 9
+      pivot: {x: 0.2548435, y: 0.46339238}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: dog body
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 92
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5169109, y: 0.43928564}
+      border: {x: 0, y: 3, z: 0, w: 3}
+      outline:
+      - - {x: -36.555805, y: 22.989288}
+        - {x: -47.555805, y: 9.989288}
+        - {x: -47.555805, y: -11.010712}
+        - {x: -36.555805, y: -18.010712}
+        - {x: 39.444195, y: -18.010712}
+        - {x: 44.444195, y: -4.0107117}
+        - {x: 44.444195, y: 22.989288}
+    - name: dog idle parts sheet_8
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 78
+        width: 52
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: dog tail3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 35
+        height: 76
+      alignment: 9
+      pivot: {x: 0.775599, y: 0.83981955}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -11.145966, y: 12.173714}
+        - {x: -27.145966, y: -17.826286}
+        - {x: -27.145966, y: -54.826286}
+        - {x: -16.145966, y: -63.826286}
+        - {x: 7.8540344, y: -63.826286}
+        - {x: 7.8540344, y: 12.173714}
+      - - {x: -27.145966, y: -61.826286}
+        - {x: -24.145966, y: -60.826286}
+        - {x: -24.145966, y: -57.826286}
+        - {x: -26.145966, y: -55.826286}
+        - {x: -27.145966, y: -55.826286}
+      - - {x: -24.145966, y: -53.826286}
+        - {x: -24.145966, y: -50.826286}
+        - {x: -27.145966, y: -49.826286}
+        - {x: -27.145966, y: -54.826286}
+    - name: dog tail2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 2
+        width: 45
+        height: 75
+      alignment: 9
+      pivot: {x: 0.8111601, y: 0.8402016}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8.497795, y: 11.984879}
+        - {x: -5.502205, y: 11.984879}
+        - {x: -36.502205, y: -39.01512}
+        - {x: -36.502205, y: -63.01512}
+        - {x: -21.502205, y: -63.01512}
+        - {x: -10.502205, y: -51.01512}
+        - {x: 7.497795, y: -8.015121}
+        - {x: 8.497795, y: -7.0151215}
+    - name: dog tail1
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 12
+        width: 72
+        height: 57
+      alignment: 9
+      pivot: {x: 0.88462853, y: 0.86574954}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5.6932526, y: 7.652275}
+        - {x: -14.693253, y: 0.6522751}
+        - {x: -28.693253, y: -15.347725}
+        - {x: -63.693253, y: -34.347725}
+        - {x: -63.693253, y: -43.347725}
+        - {x: -58.693253, y: -49.347725}
+        - {x: -17.693253, y: -49.347725}
+        - {x: 8.306747, y: -4.347725}
+        - {x: 8.306747, y: 7.652275}
+    - name: dog BLeg B
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 7
+        width: 36
+        height: 64
+      alignment: 9
+      pivot: {x: 0.6210064, y: 0.7576794}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8.356232, y: 15.508518}
+        - {x: -19.356232, y: 0.5085182}
+        - {x: -22.356232, y: -6.491482}
+        - {x: -22.356232, y: -40.49148}
+        - {x: -17.356232, y: -48.49148}
+        - {x: 13.643768, y: -48.49148}
+        - {x: 13.643768, y: 15.508518}
+      - - {x: -22.356232, y: 15.508518}
+        - {x: -22.356232, y: 11.508518}
+        - {x: -20.356232, y: 11.508518}
+        - {x: -18.356232, y: 13.508518}
+        - {x: -19.356232, y: 15.508518}
+    - name: dog BLeg F
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 9
+        width: 36
+        height: 65
+      alignment: 9
+      pivot: {x: 0.5432163, y: 0.7345668}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19.555786, y: 17.253159}
+        - {x: -19.555786, y: -5.7468414}
+        - {x: -12.555786, y: -34.74684}
+        - {x: 1.4442139, y: -47.74684}
+        - {x: 16.444214, y: -47.74684}
+        - {x: 16.444214, y: 17.253159}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

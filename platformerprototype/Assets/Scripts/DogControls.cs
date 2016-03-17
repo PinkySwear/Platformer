@@ -80,7 +80,7 @@ public class DogControls : MonoBehaviour {
 //	}
 
 	void Update() {
-		Debug.Log (myInfo.timeElapsed);
+		//Debug.Log (myInfo.timeElapsed);
 		isObserved = observedArray[0];
 		for(int i = 1; i < observedArray.Length; i++) {
 			isObserved = observedArray[i] && isObserved;
@@ -119,10 +119,6 @@ public class DogControls : MonoBehaviour {
 				if (Input.GetKeyDown (KeyCode.Space) && onSomething && !crouching) {
 					jump = true;
 					GetComponent<Renderer>().material.mainTexture = jumpSprite;
-				}
-				
-				if (!Input.GetKeyDown (KeyCode.Space) && !onSomething) {
-					//GetComponent<Renderer>().material.mainTexture = walkSprite;
 				}
 				
 				if (Input.GetKey (KeyCode.S)) {
