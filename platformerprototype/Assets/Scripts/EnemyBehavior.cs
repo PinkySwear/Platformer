@@ -7,6 +7,8 @@ public class EnemyBehavior : MonoBehaviour {
 	private int direction;
 	private Rigidbody myRb;
 	public GameObject dog;
+	//public GameObject noticePrefab;
+	public GameObject notice;
 	public bool seesDog = false;
 	//private Renderer myRend;
 	private float speed;
@@ -17,6 +19,7 @@ public class EnemyBehavior : MonoBehaviour {
 	public float initialDogDistance;
 	public float attentionSpan;
 	private float attentionCountdown;
+	public int num;
 
 	public int myType;
 	public int health;
@@ -50,8 +53,12 @@ public class EnemyBehavior : MonoBehaviour {
 		nearDog = false;
 		dogC = dog.GetComponent<DogControls> ();
 		attackCD = 1f;
+		Debug.Log("Interaction"+num);
+		notice =  GameObject.Find("Interaction"+num);
+		//hitSound = GetComponent<AudioSource> ();
+		//Debug.Log(notice);
+		notice.GetComponent<MeshRenderer>().enabled = false;
 
-		hitSound = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -60,7 +67,6 @@ public class EnemyBehavior : MonoBehaviour {
 			RaycastHit rh;
 			Vector3 eyePosition = transform.position + Vector3.up * 0.666f;
 			Vector3 dogDirection = dog.transform.position - eyePosition;
-			//Debug.Log(attentionCountdown);
 			if (seesDog) {
 				dogAngle = 181f;
 				speed = 9f;
@@ -81,12 +87,12 @@ public class EnemyBehavior : MonoBehaviour {
 					dogAngle = initialDogAngle;
 					speed = initialSpeed;
 					dogDistance = initialDogDistance;
+					notice.GetComponent<MeshRenderer>().enabled = false;
 				}
 				else {
 					speed = 0f;
 					attentionCountdown -= Time.deltaTime;
 				}
-
 			}
 			seesDog = false;
 			if (Vector3.Distance (dog.transform.position, transform.position) < 2f) {
@@ -96,9 +102,12 @@ public class EnemyBehavior : MonoBehaviour {
 			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
 				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable")))) {
 					if (rh.collider.tag == "Dog") {
-//						Debug.Log ("I SAW THE FUCKING DOG");
+						Debug.Log ("I SAW THE FUCKING DOG");
 						seesDog = true;
 						dogC.isObserved = true;
+						notice.GetComponent<MeshRenderer>().enabled = true;
+						Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
+						notice.transform.position = temp;
 						//Debug.Log("SEEN!");
 					}
 				}
