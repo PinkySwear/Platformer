@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DogControls : MonoBehaviour {
 
@@ -21,13 +22,15 @@ public class DogControls : MonoBehaviour {
 	public int killNPC = 0;
 	public bool hasKey = false;
 	public bool notDecided = true;
-	public bool enterNewRoom = false;
+	public int enterNewRoom = 0;
 	public bool isObserved = false;
 	public Texture jumpSprite;
 	public Texture crouchSprite;
 	public Texture idleSprite;
 	public Texture walkSprite;
 	public bool[] observedArray;
+	public int enterHack = 0;
+	public bool isDoor = false;
 
 //	public Vector3 lastCheckpoint;
 
@@ -109,6 +112,7 @@ public class DogControls : MonoBehaviour {
 
 			movingLeft = false;
 			movingRight = false;
+			//Debug.Log(beginCutScene);
 			if (!beginCutScene) {
 				if (Input.GetKey (KeyCode.A)) {
 					movingLeft = true;
@@ -158,18 +162,32 @@ public class DogControls : MonoBehaviour {
 
 			}
 			else {
-				if (Input.GetKey (KeyCode.K)) {
-					crouching = true;
+				if (Input.GetKey (KeyCode.UpArrow)) {
+					enterNewRoom = 1;
+					Debug.Log ("ENTER");
+					transform.position = new Vector3 (54f,12f,0f);
+					beginCutScene = false;
+				}
+				if (Input.GetKey (KeyCode.DownArrow)) {
+					enterNewRoom = 2;
+					Debug.Log ("EXIT");
+					beginCutScene = false;
+				}
+				if (Input.GetKey (KeyCode.LeftArrow)) {
+					enterNewRoom = 1;
 					Debug.Log ("KILL");
-					killNPC = 2;
+					beginCutScene = false;
 				}
-				if (Input.GetKey (KeyCode.H)) {
-					crouching = false;
+				if (Input.GetKey (KeyCode.RightArrow)) {
+					enterNewRoom = 2;
 					Debug.Log ("SAVE");
-					killNPC = 1;
+					beginCutScene = false;
 				}
-				if (Input.GetKey (KeyCode.D)) {
-					enterNewRoom = true;
+				if (Input.GetKey (KeyCode.Space)) {
+					enterHack = 0;
+					Debug.Log("NEWROOM");
+					beginCutScene = false;
+					SceneManager.LoadScene ("BasicMaze");
 				}
 			}
 		}

@@ -30,6 +30,8 @@ public class CutSceneControl : MonoBehaviour {
 	private float dogDistance;
 	public float initialDogDistance;
 	private bool dialogueStart = false;
+	private bool timeup = true;
+	private bool diagOver = false;
 
 	// Use this for initialization
 	void Start () {
@@ -40,29 +42,29 @@ public class CutSceneControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		RaycastHit rh;
-		Vector3 eyePosition = transform.position + Vector3.up * 0.666f;
-		Vector3 dogDirection = dog.transform.position - eyePosition;
-		
-		if(seesDog && !dialogueStart){
-			beginCutScene();
-		}
-		
-		else{
-			dogAngle = initialDogAngle;
-			dogDistance = initialDogDistance;
-			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
-				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable")))) {
-					if (rh.collider.tag == "Dog") {
-						Debug.Log ("Begin Dialogue"+situation);
-						Debug.Log (dialogueStart);
-						seesDog = true;
+		if(!diagOver){
+			RaycastHit rh;
+			Vector3 eyePosition = transform.position + Vector3.up * 0.666f;
+			Vector3 dogDirection = dog.transform.position - eyePosition;
+			
+			if(seesDog && !dialogueStart){
+				beginCutScene();
+			}
+			
+			else if(timeup){
+				dogAngle = initialDogAngle;
+				dogDistance = initialDogDistance;
+				if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
+					if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable")))) {
+						if (rh.collider.tag == "Dog") {
+							//Debug.Log ("Begin Dialogue"+situation);
+							//Debug.Log (dialogueStart);
+							seesDog = true;
+						}
 					}
 				}
 			}
 		}
-		
 	}
 	
 	void beginCutScene(){
@@ -70,36 +72,80 @@ public class CutSceneControl : MonoBehaviour {
 		textbox.GetComponent<Text>().text = "";
 		seesDog = false;
 		nearestEnemy = dog.GetComponent<DogControls> ();
-		if(situation != 0 && situation != 1 && situation != 2 && situation != 5 && situation != 3){
+		if(situation == 0 || situation == 3 || (situation == 2 && nearestEnemy.hasKey)){
 			nearestEnemy.beginCutScene = true;
 			dialogueStart = true;
+			dog.GetComponent<Renderer>().material.mainTexture = nearestEnemy.idleSprite;
 		}
 		else{
 			dialogueStart = true;
 		}
-		if(situation ==3 && nearestEnemy.hasKey){
-			Debug.Log("howdy!");
-			dog.transform.position = new Vector3 (54f,12f,0f);
-		}
+		//if(situation ==3 && nearestEnemy.hasKey){
+		//	Debug.Log("howdy!");
+		//	dog.transform.position = new Vector3 (54f,12f,0f);
+		//}
 		StartCoroutine(TypeText ());
 	}
 	
 	IEnumerator TypeText () {
-		foreach (char letter in message.ToCharArray()) {
+		string diag = message;
+		Debug.Log("here!");
+		if(situation == 2 && !nearestEnemy.hasKey){
+			diag = "Door appears to be locked.";
+		}
+		foreach (char letter in diag.ToCharArray()) {
 			textbox.GetComponent<Text>().text += letter;
 			if (sound) {
 				GetComponent<AudioSource> ().PlayOneShot (sound);
 				yield return 0;
 			}
 			yield return new WaitForSeconds (letterPause);
-			Debug.Log(letter);
+			//Debug.Log(letter);
 		}
-		Debug.Log("I'm Mr Meeseeks!");
-		yield return new WaitForSeconds (2);
-		if(situation ==3){
+		//if(situation ==2 && !nearestEnemy.hasKey){
+		//	yield return new WaitForSeconds (2);
+		//	dialogueStart = false;
+		//}
+		if(situation == 1){
+			yield return new WaitForSeconds (5);
+			diagOver = true;
+			textbox.GetComponent<Text>().text = "";
+		}
+		else if(situation == 2 && !nearestEnemy.hasKey){
+			yield return new WaitForSeconds (5);
+			diagOver = false;
+			textbox.GetComponent<Text>().text = "";
+		}
+		else if(situation == 0){
+			diagOver = true;
+			Debug.Log(nearestEnemy.beginCutScene);
+			nearestEnemy.beginCutScene = false;
+			textbox.GetComponent<Text>().text = "";
+		}
+		else if(situation == 2 && nearestEnemy.hasKey){
+			nearestEnemy.enterNewRoom = 0;
+			diagOver = true;
+			yield return new WaitForSeconds (5);
+			textbox.GetComponent<Text>().text = "";
+			diagOver = false;
 			dialogueStart = false;
+			seesDog = false;
 		}
-		Debug.Log(dialogueStart);
+		else if(situation == 4){
+			diagOver = true;
+			nearestEnemy.enterNewRoom = 0;
+			yield return new WaitForSeconds (5);
+			diagOver = false;
+			dialogueStart = false;
+			seesDog = false;
+		}
+		else{
+			diagOver = true;
+			textbox.GetComponent<Text>().text = "";
+		}
+
+		
+		//Debug.Log(dialogueStart);
 		//newThing = true;
 		//textbox.GetComponent<Text>().text = "Press k to kill the dude, h to help him";
 		//Debug.Log(nearestEnemy.killNPC);
