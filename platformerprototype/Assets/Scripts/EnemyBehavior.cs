@@ -55,7 +55,7 @@ public class EnemyBehavior : MonoBehaviour {
 		attackCD = 1f;
 		Debug.Log("Interaction"+num);
 		notice =  GameObject.Find("Interaction"+num);
-		//hitSound = GetComponent<AudioSource> ();
+		hitSound = GetComponent<AudioSource> ();
 		//Debug.Log(notice);
 		notice.GetComponent<MeshRenderer>().enabled = false;
 
