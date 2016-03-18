@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour 
 {
@@ -61,61 +62,64 @@ public class Player : MonoBehaviour
 	// From an outdated idea, used for color-changing and collection
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag ("Yellow Pick Up"))
-		{
-			Debug.Log ("Contact!");
-			other.gameObject.SetActive (false);
-			count = count + 1;
+		if(false){
+			if (other.gameObject.CompareTag ("Yellow Pick Up"))
+			{
+				Debug.Log ("Contact!");
+				other.gameObject.SetActive (false);
+				count = count + 1;
 
-			colorChangeCollision = true;
-			currentDelay = Time.time + colorChangeDelay;
+				colorChangeCollision = true;
+				currentDelay = Time.time + colorChangeDelay;
 
-			szin = Color.yellow;
+				szin = Color.yellow;
+			}
+			else if (other.gameObject.CompareTag ("Green Pick Up"))
+			{
+				Debug.Log ("Contact!");
+				other.gameObject.SetActive (false);
+				count = count + 1;
+
+				colorChangeCollision = true;
+				currentDelay = Time.time + colorChangeDelay;
+
+				szin = Color.green;
+			}
+			else if (other.gameObject.CompareTag ("Blue Pick Up"))
+			{
+				Debug.Log ("Contact!");
+				other.gameObject.SetActive (false);
+				count = count + 1;
+
+				colorChangeCollision = true;
+				currentDelay = Time.time + colorChangeDelay;
+
+				szin = Color.blue;
+			}
+			else if (other.gameObject.CompareTag ("Black Pick Up"))
+			{
+				Debug.Log ("Contact!");
+				other.gameObject.SetActive (false);
+				count = count + 1;
+
+				colorChangeCollision = true;
+				currentDelay = Time.time + colorChangeDelay;
+
+				szin = Color.black;
+			}
+			else if (other.gameObject.CompareTag ("Red Pick Up"))
+			{
+				Debug.Log ("Contact!");
+				other.gameObject.SetActive (false);
+				count = count + 1;
+
+				colorChangeCollision = true;
+				currentDelay = Time.time + colorChangeDelay;
+
+				szin = Color.red;
+			}
 		}
-		else if (other.gameObject.CompareTag ("Green Pick Up"))
-		{
-			Debug.Log ("Contact!");
-			other.gameObject.SetActive (false);
-			count = count + 1;
-
-			colorChangeCollision = true;
-			currentDelay = Time.time + colorChangeDelay;
-
-			szin = Color.green;
-		}
-		else if (other.gameObject.CompareTag ("Blue Pick Up"))
-		{
-			Debug.Log ("Contact!");
-			other.gameObject.SetActive (false);
-			count = count + 1;
-
-			colorChangeCollision = true;
-			currentDelay = Time.time + colorChangeDelay;
-
-			szin = Color.blue;
-		}
-		else if (other.gameObject.CompareTag ("Black Pick Up"))
-		{
-			Debug.Log ("Contact!");
-			other.gameObject.SetActive (false);
-			count = count + 1;
-
-			colorChangeCollision = true;
-			currentDelay = Time.time + colorChangeDelay;
-
-			szin = Color.black;
-		}
-		else if (other.gameObject.CompareTag ("Red Pick Up"))
-		{
-			Debug.Log ("Contact!");
-			other.gameObject.SetActive (false);
-			count = count + 1;
-
-			colorChangeCollision = true;
-			currentDelay = Time.time + colorChangeDelay;
-
-			szin = Color.red;
-		}
+		SceneManager.LoadScene ("Level1");
 	}
 
 	// From an outdated idea, used for color-changing and collection
