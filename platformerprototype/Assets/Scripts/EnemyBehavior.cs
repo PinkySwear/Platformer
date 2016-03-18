@@ -3,6 +3,8 @@ using System.Collections;
 
 public class EnemyBehavior : MonoBehaviour {
 
+	Animator anim;
+
 	public bool isDead;
 	private int direction;
 	private Rigidbody myRb;
@@ -23,6 +25,10 @@ public class EnemyBehavior : MonoBehaviour {
 	public int myType;
 	public int health;
 
+	private bool isAttacking;
+
+	private float timesincelastattack;
+
 	public bool nearDog;
 	private DogControls dogC;
 	private float attackCD;
@@ -32,6 +38,9 @@ public class EnemyBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		anim = GetComponent<Animator>();
+		timesincelastattack = 0f;
 		direction = 1;
 		isDead = false;
 		initialSpeed = 6f;
@@ -121,7 +130,7 @@ public class EnemyBehavior : MonoBehaviour {
 			myRb.velocity = new Vector3 (direction * speed, myRb.velocity.y, myRb.velocity.z);
 
 			Vector3 s = transform.localScale;
-			s.x = direction;
+			s.x = direction * 3f;
 			transform.localScale = s;
 
 			if (myType == 0) {
@@ -133,6 +142,8 @@ public class EnemyBehavior : MonoBehaviour {
 					hitSound.Play ();
 					dogC.takeDamage (1);
 					attackCD = 1f;
+					isAttacking = true;
+					timesincelastattack = 0f;
 				}
 				if (dogC.gettingHit) {
 					attackCD = 1f;
@@ -145,6 +156,24 @@ public class EnemyBehavior : MonoBehaviour {
 			dogC.observedArray[num-1] = true;
 			gameObject.layer = 9;
 		}
+		if (timesincelastattack < 0.1f) {
+			timesincelastattack += Time.deltaTime;
+		}
+		if (speed == 0) {
+			anim.SetBool ("isIdling", true);
+			anim.SetBool ("isWalking", false);
+		}
+		else {
+			anim.SetBool ("isIdling", false);
+			anim.SetBool ("isWalking", true);
+		}
+		if (isAttacking) {
+			timesincelastattack += Time.deltaTime;
+			if (timesincelastattack > 0.1f) {
+				isAttacking = false;
+			}
+		}
+		anim.SetBool ("isAttacking", isAttacking);
 
 	}
 
@@ -175,7 +204,14 @@ public class EnemyBehavior : MonoBehaviour {
 
 	void OnCollisionEnter (Collision collision) {
 		if (collision.collider.tag == "Thingy" && !isDead) {
+			Debug.Log ("CHANGING DIRECTION");
 			direction = direction * -1;
 		}
 	}
+//	void OnCollisionStay (Collision collision) {
+//		if (collision.collider.tag == "Thingy" && !isDead) {
+//			Debug.Log ("CHANGING DIRECTION");
+//			direction = direction * -1;
+//		}
+//	}
 }

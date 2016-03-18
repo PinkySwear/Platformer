@@ -78,6 +78,7 @@ public class DogControls : MonoBehaviour {
 		myRb = GetComponent<Rigidbody> ();
 		myRb.freezeRotation = true;
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dog"), LayerMask.NameToLayer("Interactable"));
+		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Interactable"));
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
 		myHealth = 5;
 		isDead = false;
@@ -207,6 +208,14 @@ public class DogControls : MonoBehaviour {
 					}
 					else if(level==2){
 						transform.position = new Vector3 (200f,-25f,0f);
+						beginCutScene = false;
+					}
+					else if(level==3){
+						transform.position = new Vector3 (73.7f,23.9f,0f);
+						beginCutScene = false;
+					}
+					else if(level ==4){
+						transform.position = new Vector3 (215.84f,-16.52f,0f);
 						beginCutScene = false;
 					}
 					level++;
