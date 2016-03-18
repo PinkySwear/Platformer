@@ -111,7 +111,7 @@ public class EnemyBehavior : MonoBehaviour {
 			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
 				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 <<LayerMask.NameToLayer("Enemy")))) {
 					if (rh.collider.tag == "Dog") {
-						Debug.Log ("I SAW THE FUCKING DOG");
+//						Debug.Log ("I SAW THE FUCKING DOG");
 						seesDog = true;
 						dogC.observedArray[num-1] = false;
 						notice.GetComponent<MeshRenderer>().enabled = true;
@@ -144,6 +144,7 @@ public class EnemyBehavior : MonoBehaviour {
 					attackCD = 1f;
 					isAttacking = true;
 					timesincelastattack = 0f;
+					anim.SetBool ("isAttacking", isAttacking);
 				}
 				if (dogC.gettingHit) {
 					attackCD = 1f;
@@ -168,6 +169,7 @@ public class EnemyBehavior : MonoBehaviour {
 			anim.SetBool ("isWalking", true);
 		}
 		if (isAttacking) {
+			Debug.Log ("IAMATTACKING");
 			timesincelastattack += Time.deltaTime;
 			if (timesincelastattack > 0.1f) {
 				isAttacking = false;
@@ -204,7 +206,6 @@ public class EnemyBehavior : MonoBehaviour {
 
 	void OnCollisionEnter (Collision collision) {
 		if (collision.collider.tag == "Thingy" && !isDead) {
-			Debug.Log ("CHANGING DIRECTION");
 			direction = direction * -1;
 		}
 	}

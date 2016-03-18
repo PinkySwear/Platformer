@@ -309,6 +309,7 @@ public class DogControls : MonoBehaviour {
 			if (!tempE.isDead) {
 				nearestEnemy = tempE;
 				nearEnemy = true;
+				Debug.Log("IAMCLOSE TO AN ENEMY");
 			}
 		}
 		if (other.gameObject.tag == "Key") {
