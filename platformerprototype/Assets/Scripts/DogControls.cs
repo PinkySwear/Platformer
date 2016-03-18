@@ -16,6 +16,8 @@ public class DogControls : MonoBehaviour {
 	private bool movingRight;
 	private bool jump = false;
 	private bool crouching = false;
+	public bool isAttacking = false;
+	public bool gettingHit = false;
 	public bool nearEnemy = false;
 	private EnemyBehavior nearestEnemy;
 	public bool beginCutScene = false;
@@ -31,6 +33,9 @@ public class DogControls : MonoBehaviour {
 	public bool[] observedArray;
 	public int enterHack = 0;
 	public bool isDoor = false;
+	private float timesincelastattack;
+	private float timesincejump;
+	private float timesincelasthit;
 
 //	public Vector3 lastCheckpoint;
 
@@ -80,6 +85,9 @@ public class DogControls : MonoBehaviour {
 
 
 		transform.position = myInfo.lastCheckPoint;
+		timesincelastattack = 0f;
+		timesincejump = 0f;
+		timesincelasthit = 0f;
 	}
 
 //	void Awake() {
@@ -87,6 +95,7 @@ public class DogControls : MonoBehaviour {
 //	}
 
 	void Update() {
+		timesincelastattack += Time.deltaTime;
 		//Debug.Log (myInfo.timeElapsed);
 		isObserved = observedArray[0];
 		for(int i = 1; i < observedArray.Length; i++) {
@@ -110,25 +119,35 @@ public class DogControls : MonoBehaviour {
 
 
 
-			movingLeft = false;
-			movingRight = false;
 			//Debug.Log(beginCutScene);
 			if (!beginCutScene) {
-				if (Input.GetKey (KeyCode.A)) {
+				if (Input.GetKey (KeyCode.A) && (!isAttacking||isAttacking && movingLeft)) {
 					movingLeft = true;
 					Vector3 s = transform.localScale;
 					s.x = -2;
 					transform.localScale = s;
 				}
-				if (Input.GetKey (KeyCode.D)) {
+				else {
+					movingLeft = false;
+				}
+				if (Input.GetKey (KeyCode.D) && (!isAttacking||isAttacking && movingRight)) {
 					movingRight = true;
 					Vector3 s = transform.localScale;
 					s.x = 2;
 					transform.localScale = s;
 				}
+				else {
+					movingRight = false;
+				}
+
+//				if (Input.GetKey (KeyCode.D) && Input.GetKey (KeyCode.A)) {
+//					movingLeft = false;
+//					movingRight = false;
+//				}
 
 				if (Input.GetKeyDown (KeyCode.Space) && onSomething && !crouching) {
 					jump = true;
+					timesincejump = 0f;
 //					GetComponent<Renderer>().material.mainTexture = jumpSprite;
 				}
 				
@@ -145,13 +164,22 @@ public class DogControls : MonoBehaviour {
 //					GetComponent<Renderer>().material.mainTexture = jumpSprite;
 				}
 
-				if (Input.GetMouseButtonDown (0)) {
+
+				if (Input.GetMouseButtonDown (0) && !crouching && onSomething && timesincelastattack > 0.5f && !gettingHit) {
 					biteSound.Play ();
 					if (nearEnemy) {
 						nearestEnemy.takeDamage (1);
 
 					}
+					isAttacking = true;
+					timesincelastattack = 0f;
 				}
+				else {
+					if (!anim.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
+						isAttacking = false;
+					}
+				}
+					
 
 				if (Input.GetKey (KeyCode.E)) {
 					if (healthKits > 0) {
@@ -194,11 +222,22 @@ public class DogControls : MonoBehaviour {
 		else {
 			transform.rotation = Quaternion.Euler (0f, 0f, 180f);
 		}
+
+		if (gettingHit) {
+			velocity = 0f;
+			timesincelasthit += Time.deltaTime;
+			if (timesincelasthit > 0.5f) {
+				gettingHit = false;
+			}
+		}
 		anim.SetBool ("Ground", onSomething);
 		anim.SetFloat ("vSpeed", myRb.velocity.y);
 		anim.SetFloat ("Speed", Mathf.Abs (myRb.velocity.x));
 		anim.SetBool ("isCrawling", crouching);
 		anim.SetBool ("isJumping", jump);
+		anim.SetBool ("isAttacking", isAttacking);
+		anim.SetBool ("isHit", gettingHit);
+//		anim.SetBool ("isHit", false);
 	}
 
 	// Update is called once per frame
@@ -214,19 +253,24 @@ public class DogControls : MonoBehaviour {
 				myRb.velocity = new Vector3 (velocity, myRb.velocity.y, myRb.velocity.z);
 			}
 
-			if (crouching) {
+			if (crouching && !gettingHit) {
 				transform.localScale = new Vector3 (transform.localScale.x, 2f, 1f);
 				
 				velocity = 5f;
 			}
-			else {
+			else if (!gettingHit){
 				transform.localScale = new Vector3 (transform.localScale.x, 2f, 1f);
 				velocity = 10f;
 			}
 
 			if (jump) {
-				myRb.AddForce (Vector3.up * jumpForce);
-				jump = false;
+				if (timesincejump > 0.1f) {
+					myRb.AddForce (Vector3.up * jumpForce);
+					jump = false;
+				}
+				else {
+					timesincejump += Time.deltaTime;
+				}
 			}
 			if (!movingRight && !movingLeft) {
 				myRb.velocity = new Vector3 (0f, myRb.velocity.y, myRb.velocity.z);
@@ -237,8 +281,9 @@ public class DogControls : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Enemy") {
-			nearestEnemy = other.gameObject.GetComponent<EnemyBehavior> ();
-			if (!nearestEnemy.isDead) {
+			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
+			if (!tempE.isDead) {
+				nearestEnemy = tempE;
 				nearEnemy = true;
 			}
 		}
@@ -256,6 +301,16 @@ public class DogControls : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerStay(Collider other) {
+		if (other.gameObject.tag == "Enemy") {
+			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
+			if (!tempE.isDead) {
+				nearestEnemy = tempE;
+				nearEnemy = true;
+			}
+		}
+	}
+
 	void OnTriggerExit(Collider other) {
 		if (other.gameObject.tag == "Enemy") {
 			nearEnemy = false;
@@ -268,6 +323,9 @@ public class DogControls : MonoBehaviour {
 		if (myHealth == 0) {
 			isDead = true;
 			Debug.Log ("DOG IS DEAD");
+			anim.SetBool ("isDead", true);
 		}
+		timesincelasthit = 0;
+		gettingHit = true;
 	}
 }

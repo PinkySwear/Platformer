@@ -128,13 +128,17 @@ public class EnemyBehavior : MonoBehaviour {
 				if (nearDog) {
 					attackCD -= Time.deltaTime;
 				}
-				if (nearDog && attackCD <= 0f && !isDead) {
+				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit)) {
 					Debug.Log ("I ATTACKED");
 					hitSound.Play ();
 					dogC.takeDamage (1);
 					attackCD = 1f;
 				}
+				if (dogC.gettingHit) {
+					attackCD = 1f;
+				}
 			}
+
 		}
 		else {
 			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
