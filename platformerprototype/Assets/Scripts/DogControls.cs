@@ -209,6 +209,14 @@ public class DogControls : MonoBehaviour {
 						transform.position = new Vector3 (200f,-25f,0f);
 						beginCutScene = false;
 					}
+					else if(level==3){
+						transform.position = new Vector3 (73.7f,23.9f,0f);
+						beginCutScene = false;
+					}
+					else if(level ==4){
+						transform.position = new Vector3 (215.84f,-16.52f,0f);
+						beginCutScene = false;
+					}
 					level++;
 				}
 				if (Input.GetKey (KeyCode.DownArrow)) {

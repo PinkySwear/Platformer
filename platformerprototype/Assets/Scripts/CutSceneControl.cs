@@ -72,7 +72,7 @@ public class CutSceneControl : MonoBehaviour {
 		textbox.GetComponent<Text>().text = "";
 		seesDog = false;
 		nearestEnemy = dog.GetComponent<DogControls> ();
-		if(situation == 0 || situation == 3 || (situation == 2 && nearestEnemy.hasKey)){
+		if(situation == 0 || situation == 3 || (situation == 2 && nearestEnemy.hasKey) || situation == 4){
 			nearestEnemy.beginCutScene = true;
 			dialogueStart = true;
 			dog.GetComponent<Renderer>().material.mainTexture = nearestEnemy.idleSprite;
@@ -132,9 +132,10 @@ public class CutSceneControl : MonoBehaviour {
 			seesDog = false;
 		}
 		else if(situation == 4){
-			diagOver = true;
 			nearestEnemy.enterNewRoom = 0;
+			diagOver = true;
 			yield return new WaitForSeconds (5);
+			textbox.GetComponent<Text>().text = "";
 			diagOver = false;
 			dialogueStart = false;
 			seesDog = false;
