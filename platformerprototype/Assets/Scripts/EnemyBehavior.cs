@@ -138,7 +138,7 @@ public class EnemyBehavior : MonoBehaviour {
 					attackCD -= Time.deltaTime;
 				}
 				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit)) {
-					Debug.Log ("I ATTACKED");
+//					Debug.Log ("I ATTACKED");
 					hitSound.Play ();
 					dogC.takeDamage (1);
 					attackCD = 1f;
@@ -169,9 +169,9 @@ public class EnemyBehavior : MonoBehaviour {
 			anim.SetBool ("isWalking", true);
 		}
 		if (isAttacking) {
-			Debug.Log ("IAMATTACKING");
+//			Debug.Log ("IAMATTACKING");
 			timesincelastattack += Time.deltaTime;
-			if (timesincelastattack > 0.1f) {
+			if (timesincelastattack > 0.2f) {
 				isAttacking = false;
 			}
 		}

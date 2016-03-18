@@ -277,6 +277,15 @@ public class DogControls : MonoBehaviour {
 				myRb.velocity = new Vector3 (velocity, myRb.velocity.y, myRb.velocity.z);
 			}
 
+			if (crouching) {
+				BoxCollider c = gameObject.GetComponent<BoxCollider> ();
+				c.size = new Vector3 (0.5f, 0.25f, 0.4f);
+			}
+			else {
+				BoxCollider c = gameObject.GetComponent<BoxCollider> ();
+				c.size = new Vector3 (0.5f, 0.5f, 0.4f);
+			}
+
 			if (crouching && !gettingHit) {
 				transform.localScale = new Vector3 (transform.localScale.x, 2f, 1f);
 				
@@ -304,7 +313,9 @@ public class DogControls : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		Debug.Log("trigger entered");
 		if (other.gameObject.tag == "Enemy") {
+			Debug.Log("enemy triggered");
 			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
 			if (!tempE.isDead) {
 				nearestEnemy = tempE;
