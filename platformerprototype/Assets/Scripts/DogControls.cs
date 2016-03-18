@@ -31,6 +31,7 @@ public class DogControls : MonoBehaviour {
 	public bool[] observedArray;
 	public int enterHack = 0;
 	public bool isDoor = false;
+	public int level = 0;
 
 //	public Vector3 lastCheckpoint;
 
@@ -165,8 +166,19 @@ public class DogControls : MonoBehaviour {
 				if (Input.GetKey (KeyCode.UpArrow)) {
 					enterNewRoom = 1;
 					Debug.Log ("ENTER");
-					transform.position = new Vector3 (54f,12f,0f);
-					beginCutScene = false;
+					if(level==0){
+						transform.position = new Vector3 (54f,12f,0f);
+						beginCutScene = false;
+					}
+					else if(level==1){
+						transform.position = new Vector3 (200f,-3f,0f);
+						beginCutScene = false;
+					}
+					else if(level==2){
+						transform.position = new Vector3 (200f,-25f,0f);
+						beginCutScene = false;
+					}
+					level++;
 				}
 				if (Input.GetKey (KeyCode.DownArrow)) {
 					enterNewRoom = 2;
