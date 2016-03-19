@@ -46,7 +46,7 @@ public class EnemyBehavior : MonoBehaviour {
 		initialSpeed = 6f;
 		initialDogAngle = 45f;
 		initialDogDistance = 5f;
-		attentionSpan = 2f;
+		attentionSpan = 5f;
 		attentionCountdown = -1f;
 		speed = initialSpeed;
 		myRb = GetComponent<Rigidbody> ();
@@ -61,10 +61,10 @@ public class EnemyBehavior : MonoBehaviour {
 		nearDog = false;
 		dogC = dog.GetComponent<DogControls> ();
 		attackCD = 1f;
-		Debug.Log("Interaction"+num);
+		//Debug.Log("Interaction"+num);
 		notice =  GameObject.Find("Interaction"+num);
 		hitSound = GetComponent<AudioSource> ();
-		//Debug.Log(notice);
+		////Debug.Log(notice);
 		notice.GetComponent<MeshRenderer>().enabled = false;
 
 	}
@@ -106,6 +106,7 @@ public class EnemyBehavior : MonoBehaviour {
 			seesDog = false;
 			if (Vector3.Distance (dog.transform.position, transform.position) < 2f) {
 				seesDog = true;
+				//Debug.Log("I see you!");
 				dogC.observedArray[num-1] = false;
 			}
 			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
@@ -183,7 +184,7 @@ public class EnemyBehavior : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Dog") {
-			Debug.Log ("gothere");
+			//Debug.Log ("gothere");
 			if (!dogC.isDead) {
 				nearDog = true;
 			}

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class DogControls : MonoBehaviour {
 
 	Animator anim;
 
+	public GameObject textbox;
 
 	public float velocity;
 	public float jumpForce;
@@ -33,11 +35,19 @@ public class DogControls : MonoBehaviour {
 	public bool[] observedArray;
 	public int enterHack = 0;
 	public bool isDoor = false;
+	
+	public GameObject health5;
+	public GameObject health4;
+	public GameObject health3;
+	public GameObject health2;
+	public GameObject health1;
+	public GameObject health0;
 
 	private float timesincelastattack;
 	private float timesincejump;
 	private float timesincelasthit;
-
+	
+	public int keyCount = 0;
 	public int level = 0;
 
 
@@ -59,6 +69,7 @@ public class DogControls : MonoBehaviour {
 	void Start () {
 
 		anim = GetComponent<Animator>();
+		textbox.GetComponent<Text>().text = "x 0";
 //		myInfo = infoObj.GetComponent<PlayerInfo> ();
 //		GetComponent<Renderer>().material.mainTexture = walkSprite;
 
@@ -66,13 +77,13 @@ public class DogControls : MonoBehaviour {
 			infoObj = GameObject.Find ("PlayerInfo");
 		}
 		myInfo = infoObj.GetComponent<PlayerInfo> ();
-		Debug.Log (myInfo.lastCheckPoint);
-		Debug.Log (myInfo.timeElapsed);
+		//Debug.Log (myInfo.lastCheckPoint);
+		//Debug.Log (myInfo.timeElapsed);
 		if (myInfo.lastCheckPoint == Vector3.zero) {
-			Debug.Log ("setting spawn to level start");
+			//Debug.Log ("setting spawn to level start");
 			myInfo.lastCheckPoint = initialSpawn.transform.position;
 		}
-		Debug.Log (myInfo.lastCheckPoint);
+		//Debug.Log (myInfo.lastCheckPoint);
 		velocity = 8f;
 		jumpForce = 950f;
 		myRb = GetComponent<Rigidbody> ();
@@ -106,6 +117,35 @@ public class DogControls : MonoBehaviour {
 		for(int i = 1; i < observedArray.Length; i++) {
 			isObserved = observedArray[i] && isObserved;
 		}
+		
+		textbox.GetComponent<Text>().text = "x "+keyCount;
+		health0.SetActive(false);
+		health1.SetActive(false);
+		health2.SetActive(false);
+		health3.SetActive(false);
+		health4.SetActive(false);
+		health5.SetActive(false);
+		
+		// Add !isObserved to make health bar only visible during combat
+		
+		if(myHealth ==0){
+			health0.SetActive(true);
+		}
+		else if(myHealth ==1){
+			health1.SetActive(true);
+		}
+		else if(myHealth ==2){
+			health2.SetActive(true);
+		}
+		else if(myHealth ==3){
+			health3.SetActive(true);
+		}
+		else if(myHealth ==4){
+			health4.SetActive(true);
+		}
+		else if(myHealth ==5){
+			health5.SetActive(true);
+		}
 		if (!isDead) {
 			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.5f;
 			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.5f;
@@ -126,7 +166,7 @@ public class DogControls : MonoBehaviour {
 
 			//Debug.Log(beginCutScene);
 			if (!beginCutScene) {
-				if (Input.GetKey (KeyCode.A) && (!isAttacking||isAttacking && movingLeft)) {
+				if (Input.GetKey (KeyCode.LeftArrow) && (!isAttacking||isAttacking && movingLeft)) {
 					movingLeft = true;
 					Vector3 s = transform.localScale;
 					s.x = -2;
@@ -135,7 +175,7 @@ public class DogControls : MonoBehaviour {
 				else {
 					movingLeft = false;
 				}
-				if (Input.GetKey (KeyCode.D) && (!isAttacking||isAttacking && movingRight)) {
+				if (Input.GetKey (KeyCode.RightArrow) && (!isAttacking||isAttacking && movingRight)) {
 					movingRight = true;
 					Vector3 s = transform.localScale;
 					s.x = 2;
@@ -150,17 +190,17 @@ public class DogControls : MonoBehaviour {
 //					movingRight = false;
 //				}
 
-				if (Input.GetKeyDown (KeyCode.Space) && onSomething && !crouching) {
+				if (Input.GetKeyDown (KeyCode.UpArrow) && onSomething && !crouching) {
 					jump = true;
 					timesincejump = 0f;
 //					GetComponent<Renderer>().material.mainTexture = jumpSprite;
 				}
 				
-				if (Input.GetKey (KeyCode.S)) {
+				if (Input.GetKey (KeyCode.DownArrow)) {
 					crouching = true;
 //					GetComponent<Renderer>().material.mainTexture = crouchSprite;
 				}
-				if (!Input.GetKey (KeyCode.S) && !underSomething && onSomething) {
+				if (!Input.GetKey (KeyCode.DownArrow) && !underSomething && onSomething) {
 					crouching = false;
 //					GetComponent<Renderer>().material.mainTexture = walkSprite;
 				}
@@ -170,7 +210,7 @@ public class DogControls : MonoBehaviour {
 				}
 
 
-				if (Input.GetMouseButtonDown (0) && !crouching && onSomething && timesincelastattack > 0.5f && !gettingHit) {
+				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.5f && !gettingHit) {
 					biteSound.Play ();
 					if (nearEnemy) {
 						nearestEnemy.takeDamage (1);
@@ -195,9 +235,10 @@ public class DogControls : MonoBehaviour {
 
 			}
 			else {
-				if (Input.GetKey (KeyCode.UpArrow)) {
+				if (Input.GetKey (KeyCode.Return)) {
 					enterNewRoom = 1;
-					Debug.Log ("ENTER");
+					//Debug.Log ("ENTER");
+					Debug.Log(level);
 					if(level==0){
 						transform.position = new Vector3 (54f,12f,0f);
 						beginCutScene = false;
@@ -207,37 +248,35 @@ public class DogControls : MonoBehaviour {
 						beginCutScene = false;
 					}
 					else if(level==2){
-						transform.position = new Vector3 (200f,-25f,0f);
+						transform.position = new Vector3 (73.7f,23.9f,0f);
+						Debug.Log("Right?");
 						beginCutScene = false;
+						
 					}
 					else if(level==3){
-						transform.position = new Vector3 (73.7f,23.9f,0f);
-						beginCutScene = false;
-					}
-					else if(level ==4){
 						transform.position = new Vector3 (215.84f,-16.52f,0f);
 						beginCutScene = false;
 					}
 					level++;
 				}
-				if (Input.GetKey (KeyCode.DownArrow)) {
+				if (Input.GetKey (KeyCode.D)) {
 					enterNewRoom = 2;
-					Debug.Log ("EXIT");
+					//Debug.Log ("EXIT");
 					beginCutScene = false;
 				}
-				if (Input.GetKey (KeyCode.LeftArrow)) {
+				if (Input.GetKey (KeyCode.A)) {
 					enterNewRoom = 1;
-					Debug.Log ("KILL");
+					//Debug.Log ("KILL");
 					beginCutScene = false;
 				}
-				if (Input.GetKey (KeyCode.RightArrow)) {
+				if (Input.GetKey (KeyCode.S)) {
 					enterNewRoom = 2;
-					Debug.Log ("SAVE");
+					//Debug.Log ("SAVE");
 					beginCutScene = false;
 				}
-				if (Input.GetKey (KeyCode.Space)) {
+				if (Input.GetKey (KeyCode.W)) {
 					enterHack = 0;
-					Debug.Log("NEWROOM");
+					//Debug.Log("NEWROOM");
 					beginCutScene = false;
 					SceneManager.LoadScene ("BasicMaze");
 				}
@@ -313,18 +352,19 @@ public class DogControls : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		Debug.Log("trigger entered");
+		//Debug.Log("trigger entered");
 		if (other.gameObject.tag == "Enemy") {
-			Debug.Log("enemy triggered");
+			//Debug.Log("enemy triggered");
 			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
 			if (!tempE.isDead) {
 				nearestEnemy = tempE;
 				nearEnemy = true;
-				Debug.Log("IAMCLOSE TO AN ENEMY");
+				//Debug.Log("IAMCLOSE TO AN ENEMY");
 			}
 		}
 		if (other.gameObject.tag == "Key") {
 			hasKey = true;
+			keyCount++;
 			Destroy (other.gameObject);
 		}
 		if (other.gameObject.tag == "Health") {
@@ -358,7 +398,7 @@ public class DogControls : MonoBehaviour {
 		myHealth -= dm;
 		if (myHealth == 0) {
 			isDead = true;
-			Debug.Log ("DOG IS DEAD");
+			//Debug.Log ("DOG IS DEAD");
 			anim.SetBool ("isDead", true);
 		}
 		timesincelasthit = 0;

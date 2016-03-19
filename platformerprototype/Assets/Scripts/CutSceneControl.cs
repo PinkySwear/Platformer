@@ -17,7 +17,7 @@ public class CutSceneControl : MonoBehaviour {
 	//                   NPC 2 -> dilemma 2, NPC 3 -> Boss Dialgoue
 	//                   NPC 4 -> Supervisor Outro ???
 	
-	public float letterPause = 0.001f;
+	public float letterPause = 0.1f;
 	public AudioClip sound;
 	private DogControls nearestEnemy;
  
@@ -89,7 +89,7 @@ public class CutSceneControl : MonoBehaviour {
 	
 	IEnumerator TypeText () {
 		string diag = message;
-		Debug.Log("here!");
+		//Debug.Log("here!");
 		if(situation == 2 && !nearestEnemy.hasKey){
 			diag = "Door appears to be locked.";
 		}
@@ -118,7 +118,7 @@ public class CutSceneControl : MonoBehaviour {
 		}
 		else if(situation == 0){
 			diagOver = true;
-			Debug.Log(nearestEnemy.beginCutScene);
+			//Debug.Log(nearestEnemy.beginCutScene);
 			nearestEnemy.beginCutScene = false;
 			textbox.GetComponent<Text>().text = "";
 		}
