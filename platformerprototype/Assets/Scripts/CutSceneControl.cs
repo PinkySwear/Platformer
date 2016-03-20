@@ -7,6 +7,8 @@ public class CutSceneControl : MonoBehaviour {
 	public int situation;
 	public GameObject dog;
 	public GameObject textbox;
+	public GameObject textbox2;
+	public bool next;
 	public int NPC;
 	
 	// situation 0 => sees first enemy, situation 1 => sees first object
@@ -17,7 +19,7 @@ public class CutSceneControl : MonoBehaviour {
 	//                   NPC 2 -> dilemma 2, NPC 3 -> Boss Dialgoue
 	//                   NPC 4 -> Supervisor Outro ???
 	
-	public float letterPause = 0.1f;
+	public float letterPause = 0.001f;
 	public AudioClip sound;
 	private DogControls nearestEnemy;
  
@@ -49,6 +51,8 @@ public class CutSceneControl : MonoBehaviour {
 			
 			if(seesDog && !dialogueStart){
 				beginCutScene();
+				//Debug.Log(textbox2.GetComponent<Text>().text);
+				//Debug.Log("And now this!");
 			}
 			
 			else if(timeup){
@@ -69,7 +73,8 @@ public class CutSceneControl : MonoBehaviour {
 	
 	void beginCutScene(){
 		//message = guiText.text;
-		textbox.GetComponent<Text>().text = "";
+		//textbox.GetComponent<Text>().text = "";
+		//textbox2.GetComponent<Text>().text = "";
 		seesDog = false;
 		nearestEnemy = dog.GetComponent<DogControls> ();
 		if(situation == 0 || situation == 3 || (situation == 2 && nearestEnemy.hasKey) || situation == 4){
@@ -89,12 +94,19 @@ public class CutSceneControl : MonoBehaviour {
 	
 	IEnumerator TypeText () {
 		string diag = message;
-		//Debug.Log("here!");
+		next = !next;
 		if(situation == 2 && !nearestEnemy.hasKey){
 			diag = "Door appears to be locked.";
 		}
 		foreach (char letter in diag.ToCharArray()) {
-			textbox.GetComponent<Text>().text += letter;
+			if(next){
+				textbox.GetComponent<Text>().text += letter;
+				//Debug.Log(textbox.GetComponent<Text>().text);
+			}
+			else{
+				textbox2.GetComponent<Text>().text += letter;
+				//Debug.Log(textbox2.GetComponent<Text>().text);
+			}
 			if (sound) {
 				GetComponent<AudioSource> ().PlayOneShot (sound);
 				yield return 0;
@@ -110,23 +122,27 @@ public class CutSceneControl : MonoBehaviour {
 			yield return new WaitForSeconds (5);
 			diagOver = true;
 			textbox.GetComponent<Text>().text = "";
+			textbox2.GetComponent<Text>().text = "";
 		}
 		else if(situation == 2 && !nearestEnemy.hasKey){
 			yield return new WaitForSeconds (5);
 			diagOver = false;
 			textbox.GetComponent<Text>().text = "";
+			textbox2.GetComponent<Text>().text = "";
 		}
 		else if(situation == 0){
 			diagOver = true;
 			//Debug.Log(nearestEnemy.beginCutScene);
 			nearestEnemy.beginCutScene = false;
 			textbox.GetComponent<Text>().text = "";
+			textbox2.GetComponent<Text>().text = "";
 		}
 		else if(situation == 2 && nearestEnemy.hasKey){
 			nearestEnemy.enterNewRoom = 0;
 			diagOver = true;
 			yield return new WaitForSeconds (5);
 			textbox.GetComponent<Text>().text = "";
+			textbox2.GetComponent<Text>().text = "";
 			diagOver = false;
 			dialogueStart = false;
 			seesDog = false;
@@ -136,6 +152,7 @@ public class CutSceneControl : MonoBehaviour {
 			diagOver = true;
 			yield return new WaitForSeconds (5);
 			textbox.GetComponent<Text>().text = "";
+			textbox2.GetComponent<Text>().text = "";
 			diagOver = false;
 			dialogueStart = false;
 			seesDog = false;
@@ -143,8 +160,8 @@ public class CutSceneControl : MonoBehaviour {
 		else{
 			diagOver = true;
 			textbox.GetComponent<Text>().text = "";
+			textbox2.GetComponent<Text>().text = "";
 		}
-
 		
 		//Debug.Log(dialogueStart);
 		//newThing = true;
