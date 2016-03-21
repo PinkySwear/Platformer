@@ -51,9 +51,9 @@ public class FOV2DEyes : MonoBehaviour
 		}
 	}
 	
-	void OnDrawGizmosSelected()
+	void OnDrawGizmos()
 	{
-		Gizmos.color = Color.cyan;
+		Gizmos.color = Color.red;
 		
 		if (raysGizmosEnabled && hits.Count() > 0) 
 		{

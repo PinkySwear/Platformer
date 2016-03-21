@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyBehavior : MonoBehaviour {
 
@@ -15,10 +16,39 @@ public class EnemyBehavior : MonoBehaviour {
 	//private Renderer myRend;
 	private float speed;
 	public float initialSpeed;
-	private float dogAngle;
-	public float initialDogAngle;
+
+
+	private int dogAngle;
+	public int initialDogAngle;
+	private float viewDistance;
+	public float initialviewDistance;
+	private Vector3 focusDirection;
+	private int coneQuality;
+	private Vector3 eyePosition;
 	private float dogDistance;
-	public float initialDogDistance;
+
+	private Vector3 tempDirection;
+
+	public List<RaycastHit> hits = new List<RaycastHit>();
+	private RaycastHit hit;
+
+
+	/********************************
+	 * */
+	public List<Material> materials;
+
+	Vector3[] newVertices;
+	Vector2[] newUV;
+	int[] newTriangles;
+	Mesh mesh;
+	MeshRenderer meshRenderer;
+	int i;
+	int v;
+	/********************************
+	 * */
+
+
+
 	public float attentionSpan;
 	private float attentionCountdown;
 	public int num;
@@ -36,6 +66,9 @@ public class EnemyBehavior : MonoBehaviour {
 	private AudioSource hitSound;
 
 
+
+
+
 	// Use this for initialization
 	void Start () {
 
@@ -44,8 +77,8 @@ public class EnemyBehavior : MonoBehaviour {
 		direction = 1;
 		isDead = false;
 		initialSpeed = 6f;
-		initialDogAngle = 45f;
-		initialDogDistance = 5f;
+		initialDogAngle = 90;
+		initialviewDistance = 10f;
 		attentionSpan = 5f;
 		attentionCountdown = -1f;
 		speed = initialSpeed;
@@ -67,21 +100,36 @@ public class EnemyBehavior : MonoBehaviour {
 		////Debug.Log(notice);
 		notice.GetComponent<MeshRenderer>().enabled = false;
 
+		focusDirection = new Vector3 (direction, -0.9f, 0f);
+		coneQuality = 2;
+
+
+
+
+
+		mesh = GetComponentInChildren<MeshFilter>().mesh;
+		meshRenderer = GetComponentInChildren<MeshRenderer>();
+
+		meshRenderer.material = materials[0];
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!isDead) {
-			RaycastHit rh;
-			Vector3 eyePosition = transform.position + Vector3.up * 0.666f;
+
+			dogDistance = Vector3.Distance (dog.transform.position, transform.position);
+//			RaycastHit rh;
+			eyePosition = transform.position + Vector3.up * 0.666f;
 			Vector3 dogDirection = dog.transform.position - eyePosition;
 			if (seesDog) {
-				dogAngle = 181f;
+				focusDirection = dogDirection;
+				dogAngle = 180;
 				speed = 9f;
 				if (Vector3.Distance (transform.position, dog.transform.position) < 2f) {
 					speed = 0f;
 				}
-				dogDistance = 10f;
+				viewDistance = 10f;
 				if (dogDirection.x < 0) {
 					direction = -1;
 				}
@@ -91,10 +139,12 @@ public class EnemyBehavior : MonoBehaviour {
 				attentionCountdown = 2f;
 			}
 			else {
+				
 				if (attentionCountdown < 0f) {
+					focusDirection = new Vector3 (direction, -0.9f, 0f);
 					dogAngle = initialDogAngle;
 					speed = initialSpeed;
-					dogDistance = initialDogDistance;
+					viewDistance = initialviewDistance;
 					notice.GetComponent<MeshRenderer>().enabled = false;
 					dogC.observedArray[num-1] = true;
 				}
@@ -109,24 +159,24 @@ public class EnemyBehavior : MonoBehaviour {
 				//Debug.Log("I see you!");
 				dogC.observedArray[num-1] = false;
 			}
-			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
-				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 <<LayerMask.NameToLayer("Enemy")))) {
-					if (rh.collider.tag == "Dog") {
-//						Debug.Log ("I SAW THE FUCKING DOG");
-						seesDog = true;
-						dogC.observedArray[num-1] = false;
-						notice.GetComponent<MeshRenderer>().enabled = true;
-						Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
-						notice.transform.position = temp;
-						//Debug.Log("SEEN!");
-					}
-				}
-			}
+//			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
+//				if (Physics.Raycast (eyePosition, dogDirection.normalized * viewDistance, out rh, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 <<LayerMask.NameToLayer("Enemy")))) {
+//					if (rh.collider.tag == "Dog") {
+////						Debug.Log ("I SAW THE FUCKING DOG");
+//						seesDog = true;
+//						dogC.observedArray[num-1] = false;
+//						notice.GetComponent<MeshRenderer>().enabled = true;
+//						Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
+//						notice.transform.position = temp;
+//						//Debug.Log("SEEN!");
+//					}
+//				}
+//			}
 				
 
-			Debug.DrawRay (eyePosition, dogDirection.normalized * dogDistance, Color.green);
-			Debug.DrawRay (eyePosition, Vector3.right * direction * dogDistance, Color.red);
-			Debug.DrawRay (eyePosition, Vector3.down * dogDistance, Color.red);
+//			Debug.DrawRay (eyePosition, dogDirection.normalized * viewDistance, Color.green);
+//			Debug.DrawRay (eyePosition, Vector3.right * direction * viewDistance, Color.red);
+//			Debug.DrawRay (eyePosition, Vector3.down * viewDistance, Color.red);
 			transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 			myRb.velocity = new Vector3 (direction * speed, myRb.velocity.y, myRb.velocity.z);
 
@@ -150,6 +200,11 @@ public class EnemyBehavior : MonoBehaviour {
 				if (dogC.gettingHit) {
 					attackCD = 1f;
 				}
+			}
+			if (dogDistance < 50) {
+				castRays ();
+				updateMesh ();
+				updateMeshMaterial ();
 			}
 
 		}
@@ -210,6 +265,120 @@ public class EnemyBehavior : MonoBehaviour {
 			direction = direction * -1;
 		}
 	}
+
+
+
+
+	void castRays() {
+		int numRays = dogAngle * coneQuality;
+		float currAngle = dogAngle / -2;
+
+		hits.Clear ();
+	
+
+		for (int i = 0; i < numRays; i++)
+		{
+			tempDirection = Quaternion.AngleAxis (currAngle, Vector3.forward) * focusDirection;
+			tempDirection = Vector3.Normalize (tempDirection);
+			hit = new RaycastHit();
+
+			if (Physics.Raycast (eyePosition, tempDirection, out hit, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy"))) == false) {		
+//				Debug.Log (hit.collider);
+				hit.point = eyePosition + (tempDirection * viewDistance);
+			}
+			else {
+				if (hit.collider.tag == "Dog") {
+//					hit.point = eyePosition + (tempDirection * viewDistance);
+					seesDog = true;
+					dogC.observedArray[num-1] = false;
+					notice.GetComponent<MeshRenderer>().enabled = true;
+					Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
+					notice.transform.position = temp;
+				}
+			}
+
+			hits.Add (hit);
+
+			currAngle += 1f / coneQuality;
+		}
+	}
+
+	void updateMesh () {
+		if (hits == null || hits.Count == 0)
+			return;
+
+		if (mesh.vertices.Length != hits.Count + 1)
+		{
+			mesh.Clear();
+			newVertices = new Vector3[hits.Count + 1];
+			newTriangles = new int[(hits.Count - 1) * 3];
+
+			i = 0;
+			v = 1;
+			while (i < newTriangles.Length)
+			{
+				if ((i % 3) == 0)
+				{
+					newTriangles[i] = 0;
+					newTriangles[i + 1] = v;
+					newTriangles[i + 2] = v + 1;
+					v++;
+				}
+				i++;
+			}
+		}
+
+		newVertices[0] = transform.InverseTransformPoint(eyePosition);
+		for (i = 1; i <= hits.Count; i++)
+		{
+			newVertices[i] = transform.InverseTransformPoint(hits[i-1].point);
+		}
+
+		newUV = new Vector2[newVertices.Length];
+		i = 0;
+		while (i < newUV.Length) {
+			newUV[i] = new Vector2(newVertices[i].x, newVertices[i].z);
+			i++;
+		}
+
+		mesh.vertices = newVertices;
+		mesh.triangles = newTriangles;
+		mesh.uv = newUV;
+
+		mesh.RecalculateNormals();
+		mesh.RecalculateBounds();
+		meshRenderer.gameObject.transform.localScale = new Vector3 (-1 * direction, 1f, 1f);
+		meshRenderer.gameObject.transform.localEulerAngles = new Vector3 (0f, (direction + 1) * 90, 0f);
+	}
+
+
+	void updateMeshMaterial () {
+		for (i = 0; i < materials.Count; i++)
+		{
+			if (meshRenderer.material != materials[i])
+			{
+				meshRenderer.material = materials[i];
+			}
+		}
+	}
+
+//	void OnDrawGizmosSelected()
+//	{
+//		Gizmos.color = Color.cyan;
+//
+//		if (true && hits.Count > 0) 
+//		{
+//			foreach (RaycastHit hit in hits)
+//			{
+//				Gizmos.DrawSphere(hit.point, 0.04f);
+//				Gizmos.DrawLine(transform.position, hit.point);
+//			}
+//		}
+//	}
+
+
+
+
 //	void OnCollisionStay (Collision collision) {
 //		if (collision.collider.tag == "Thingy" && !isDead) {
 //			Debug.Log ("CHANGING DIRECTION");
