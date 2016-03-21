@@ -361,7 +361,7 @@ public class DogControls : MonoBehaviour {
 				nearEnemy = true;
 				//Debug.Log("IAMCLOSE TO AN ENEMY");
 			}
-		}
+		} 
 		if (other.gameObject.tag == "Key") {
 			hasKey = true;
 			keyCount++;
