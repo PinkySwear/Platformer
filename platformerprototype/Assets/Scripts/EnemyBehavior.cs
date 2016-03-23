@@ -16,6 +16,8 @@ public class EnemyBehavior : MonoBehaviour {
 	//private Renderer myRend;
 	private float speed;
 	public float initialSpeed;
+	bool jump;
+	bool onSomething;
 
 
 	private int dogAngle;
@@ -25,6 +27,7 @@ public class EnemyBehavior : MonoBehaviour {
 	private Vector3 focusDirection;
 	private int coneQuality;
 	private Vector3 eyePosition;
+	private Vector3 feetPosition;
 	private float dogDistance;
 
 	private Vector3 tempDirection;
@@ -76,7 +79,7 @@ public class EnemyBehavior : MonoBehaviour {
 		timesincelastattack = 0f;
 		direction = 1;
 		isDead = false;
-		initialSpeed = 6f;
+		initialSpeed = 4f;
 		initialDogAngle = 90;
 		initialviewDistance = 10f;
 		attentionSpan = 5f;
@@ -101,7 +104,7 @@ public class EnemyBehavior : MonoBehaviour {
 		notice.GetComponent<MeshRenderer>().enabled = false;
 
 		focusDirection = new Vector3 (direction, -0.9f, 0f);
-		coneQuality = 2;
+		coneQuality = 1;
 
 
 
@@ -116,16 +119,39 @@ public class EnemyBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 		if (!isDead) {
 
+			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.15f;
+			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.15f;
+
+			Debug.DrawLine (right, right + (Vector3.down * transform.lossyScale.y * 0.62f));
+			Debug.DrawLine (left, left + (Vector3.down * transform.lossyScale.y * 0.62f));
+
+			onSomething = Physics.Linecast (right, right + (Vector3.down * transform.lossyScale.y * 0.62f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"))
+				|| Physics.Linecast (left, left + (Vector3.down * transform.lossyScale.y * 0.62f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"));
+
 			dogDistance = Vector3.Distance (dog.transform.position, transform.position);
-//			RaycastHit rh;
+			RaycastHit rh;
+			bool blocked = false;
 			eyePosition = transform.position + Vector3.up * 0.666f;
+			feetPosition = transform.position + Vector3.down * 1f;
+			Debug.DrawLine (feetPosition, feetPosition + (Vector3.right * direction).normalized, Color.red);
+
 			Vector3 dogDirection = dog.transform.position - eyePosition;
+			if (Physics.Raycast (feetPosition, Vector3.right * direction, out rh, 1f, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog")))) {
+				if (rh.collider.tag == "Thingy" && !isDead && !jump) {
+					blocked = true;
+				}
+			}
 			if (seesDog) {
+				if(blocked && !jump && onSomething) {
+					jump = true;
+				}
 				focusDirection = dogDirection;
 				dogAngle = 180;
-				speed = 9f;
+				speed = 6.5f;
 				if (Vector3.Distance (transform.position, dog.transform.position) < 2f) {
 					speed = 0f;
 				}
@@ -147,6 +173,14 @@ public class EnemyBehavior : MonoBehaviour {
 					viewDistance = initialviewDistance;
 					notice.GetComponent<MeshRenderer>().enabled = false;
 					dogC.observedArray[num-1] = true;
+					if(blocked && !jump && onSomething) {
+						if (Random.value > 0.8f) {
+							jump = true;
+						}
+						else {
+							direction = direction * -1;
+						}
+					}
 				}
 				else {
 					speed = 0f;
@@ -188,7 +222,7 @@ public class EnemyBehavior : MonoBehaviour {
 				if (nearDog) {
 					attackCD -= Time.deltaTime;
 				}
-				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit)) {
+				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit) && seesDog) {
 //					Debug.Log ("I ATTACKED");
 					hitSound.Play ();
 					dogC.takeDamage (1);
@@ -212,6 +246,7 @@ public class EnemyBehavior : MonoBehaviour {
 			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
 			dogC.observedArray[num-1] = true;
 			gameObject.layer = 9;
+			meshRenderer.enabled = false;
 		}
 		if (timesincelastattack < 0.1f) {
 			timesincelastattack += Time.deltaTime;
@@ -235,6 +270,13 @@ public class EnemyBehavior : MonoBehaviour {
 
 	}
 
+	void FixedUpdate() {
+		if (jump) {
+			myRb.AddForce (Vector3.up * 950f);
+			jump = false;
+		}
+	
+	}
 
 
 	void OnTriggerEnter(Collider other) {
@@ -260,11 +302,11 @@ public class EnemyBehavior : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter (Collision collision) {
-		if (collision.collider.tag == "Thingy" && !isDead) {
-			direction = direction * -1;
-		}
-	}
+//	void OnCollisionEnter (Collision collision) {
+//		if (collision.collider.tag == "Thingy" && !isDead) {
+//			direction = direction * -1;
+//		}
+//	}
 
 
 

@@ -151,19 +151,19 @@ public class DogControls : MonoBehaviour {
 			health5.SetActive(true);
 		}
 		if (!isDead) {
-			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.5f;
-			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.5f;
+			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.25f + Vector3.down * 0.15f;
+			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.25f + Vector3.down * 0.15f;
 
-			Debug.DrawLine (right, right + (Vector3.down * transform.lossyScale.y * 0.5f));
-			Debug.DrawLine (left, left + (Vector3.down * transform.lossyScale.y * 0.5f));
-			Debug.DrawLine (right, right + (Vector3.up * 0.76f));
-			Debug.DrawLine (left, left + (Vector3.up * 0.76f));
+			Debug.DrawLine (right, right + (Vector3.down * transform.lossyScale.y * 0.4f));
+			Debug.DrawLine (left, left + (Vector3.down * transform.lossyScale.y * 0.3f));
+			Debug.DrawLine (right, right + (Vector3.up * transform.lossyScale.y * 0.3f));
+			Debug.DrawLine (left, left + (Vector3.up * 0.4f));
 
-			onSomething = Physics.Linecast (right, right + (Vector3.down * transform.lossyScale.y * 0.5f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"))
-				|| Physics.Linecast (left, left + (Vector3.down * transform.lossyScale.y * 0.5f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"));
+			onSomething = Physics.Linecast (right, right + (Vector3.down * transform.lossyScale.y * 0.3f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"))
+				|| Physics.Linecast (left, left + (Vector3.down * transform.lossyScale.y * 0.3f), 1 << LayerMask.NameToLayer ("Obstacle") | 1 << LayerMask.NameToLayer ("Enemy"));
 		
-			underSomething = Physics.Linecast (right, right + (Vector3.up * 0.76f), 1 << LayerMask.NameToLayer ("Obstacle"))
-			|| Physics.Linecast (left, left + (Vector3.up * 0.76f), 1 << LayerMask.NameToLayer ("Obstacle"));
+			underSomething = Physics.Linecast (right, right + (Vector3.up * transform.lossyScale.y * 0.3f), 1 << LayerMask.NameToLayer ("Obstacle"))
+				|| Physics.Linecast (left, left + (Vector3.up * transform.lossyScale.y * 0.3f), 1 << LayerMask.NameToLayer ("Obstacle"));
 
 
 
@@ -219,7 +219,7 @@ public class DogControls : MonoBehaviour {
 				}
 
 
-				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.5f && !gettingHit) {
+				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.1f && !gettingHit) {
 					biteSound.Play ();
 					if (nearEnemy) {
 						nearestEnemy.takeDamage (1);
@@ -293,6 +293,7 @@ public class DogControls : MonoBehaviour {
 		}
 		else {
 			transform.rotation = Quaternion.Euler (0f, 0f, 180f);
+			myRb.velocity = new Vector3(0f, myRb.velocity.y, 0f);
 		}
 
 		if (gettingHit) {
@@ -314,23 +315,25 @@ public class DogControls : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 		if (!isDead) {
 			if (movingLeft) {
 				//restrict movement to one plane
-				transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
+//				transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 				myRb.velocity = new Vector3 (-1 * velocity, myRb.velocity.y, myRb.velocity.z);
 			}
 			if (movingRight) {
-				transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
+//				transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 				myRb.velocity = new Vector3 (velocity, myRb.velocity.y, myRb.velocity.z);
 			}
-
 			if (crouching) {
 				BoxCollider c = gameObject.GetComponent<BoxCollider> ();
+				c.center = new Vector3 (0.15f, -0.175f, 0f);
 				c.size = new Vector3 (0.5f, 0.25f, 0.4f);
 			}
 			else {
 				BoxCollider c = gameObject.GetComponent<BoxCollider> ();
+				c.center = new Vector3 (0.15f, -0.05f, 0f);
 				c.size = new Vector3 (0.5f, 0.5f, 0.4f);
 			}
 
