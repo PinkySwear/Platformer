@@ -77,7 +77,7 @@ public class ItemInteraction : MonoBehaviour {
 			//	dogC.nearDoor = false;
 			//}
 			//Debug.Log(openDoor);
-			if(openDoor & seesDog){
+			if((openDoor & seesDog) && (transform.position.y <= originalPosition.y+5)){
 				transform.position = new Vector3 (transform.position.x,transform.position.y+0.1f,transform.position.z);
 			}
 			if(openDoor & !seesDog){
@@ -89,10 +89,10 @@ public class ItemInteraction : MonoBehaviour {
 		}
 		else if(!needsLever){
 			if(down){
-				transform.position = new Vector3 (transform.position.x,transform.position.y-0.05f,transform.position.z);
+				transform.position = new Vector3 (transform.position.x,transform.position.y-0.1f,transform.position.z);
 			}
 			else{
-				transform.position = new Vector3 (transform.position.x,transform.position.y+0.05f,transform.position.z);
+				transform.position = new Vector3 (transform.position.x,transform.position.y+0.1f,transform.position.z);
 			}
 			if(transform.position.y < minFloor){
 				down = false;
