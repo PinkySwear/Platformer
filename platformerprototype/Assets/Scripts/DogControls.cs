@@ -35,6 +35,8 @@ public class DogControls : MonoBehaviour {
 	public bool[] observedArray;
 	public int enterHack = 0;
 	public bool isDoor = false;
+	public bool nearDoor = false;
+	public bool openDoor = false;
 	
 	public GameObject health5;
 	public GameObject health4;
@@ -117,7 +119,9 @@ public class DogControls : MonoBehaviour {
 		for(int i = 1; i < observedArray.Length; i++) {
 			isObserved = observedArray[i] && isObserved;
 		}
-		
+		if(!nearDoor){
+			openDoor = false;
+		}
 		textbox.GetComponent<Text>().text = "x "+keyCount;
 		health0.SetActive(false);
 		health1.SetActive(false);
@@ -205,8 +209,13 @@ public class DogControls : MonoBehaviour {
 //					GetComponent<Renderer>().material.mainTexture = walkSprite;
 				}
 				
-				if (!Input.GetKey (KeyCode.S) && !underSomething && !onSomething) {
-//					GetComponent<Renderer>().material.mainTexture = jumpSprite;
+				if (Input.GetKey (KeyCode.D)) {
+					Debug.Log("D pressed!");
+					//Debug.Log(openDoor);
+					if(nearDoor){
+						Debug.Log("open door?");
+						openDoor = true;
+					}
 				}
 
 

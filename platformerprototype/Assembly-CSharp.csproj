@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\DogControls.cs" />
      <Compile Include="Assets\Scripts\DroidBehavior.cs" />
      <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
+     <Compile Include="Assets\Scripts\ItemInteraction.cs" />
      <Compile Include="Assets\Scripts\LaserBeam.cs" />
      <Compile Include="Assets\Scripts\LevelController.cs" />
      <Compile Include="Assets\Scripts\LightSoundControl.cs" />
