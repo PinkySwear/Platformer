@@ -34,6 +34,7 @@ public class EnemyBehavior : MonoBehaviour {
 
 	public List<RaycastHit> hits = new List<RaycastHit>();
 	private RaycastHit hit;
+	private float timesincedeath;
 
 
 	/********************************
@@ -114,6 +115,7 @@ public class EnemyBehavior : MonoBehaviour {
 		meshRenderer = GetComponentInChildren<MeshRenderer>();
 
 		meshRenderer.material = materials[0];
+		timesincedeath = 0f;
 
 	}
 	
@@ -250,10 +252,20 @@ public class EnemyBehavior : MonoBehaviour {
 
 		}
 		else {
-			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
+//			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
+			if (timesincedeath < 0.01f) {
+				myRb.AddForce ((Vector3.up * 5f + Vector3.right * Mathf.Sign((transform.position - dog.transform.position).x) * 3f).normalized * 300f);
+//				myRb.AddForce ((Vector3.up * 5f).normalized * 300f);
+			}
+			timesincedeath += Time.deltaTime;
 			dogC.observedArray[num-1] = true;
 			gameObject.layer = 9;
 			meshRenderer.enabled = false;
+			myRb.freezeRotation = false;
+			myRb.AddTorque (new Vector3 (70f, 0f, 0f));
+//			myRb.AddTorque (new Vector3 (0f, 0f, direction * 90f));
+//			myRb.rotation = (Quaternion.Lerp(Quaternion.Euler(0f, 0f, 0f), Quaternion.Euler(0f, 0f, direction * 90f), timesincedeath * 2.5f));
+			transform.position = new Vector3 (transform.position.x, transform.position.y, 10f);
 		}
 		if (timesincelastattack < 0.1f) {
 			timesincelastattack += Time.deltaTime;

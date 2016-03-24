@@ -55,7 +55,7 @@ public class DogControls : MonoBehaviour {
 	public int level = 0;
 
 
-//	public Vector3 lastCheckpoint;
+	public Vector3 lastCheckpoint;
 
 	public GameObject infoObj;
 	private PlayerInfo myInfo;
@@ -74,16 +74,17 @@ public class DogControls : MonoBehaviour {
 
 		anim = GetComponent<Animator>();
 		textbox.GetComponent<Text>().text = "x 0";
-//		myInfo = infoObj.GetComponent<PlayerInfo> ();
+		myInfo = infoObj.GetComponent<PlayerInfo> ();
 //		GetComponent<Renderer>().material.mainTexture = walkSprite;
 
 		if (infoObj == null) {
 			infoObj = GameObject.Find ("PlayerInfo");
 		}
+		infoObj = GameObject.Find ("PlayerInfo");
 		myInfo = infoObj.GetComponent<PlayerInfo> ();
-		//Debug.Log (myInfo.lastCheckPoint);
+		Debug.Log (myInfo.lastCheckPoint);
 		//Debug.Log (myInfo.timeElapsed);
-		if (myInfo.lastCheckPoint == Vector3.zero) {
+		if (myInfo.lastCheckPoint.x == 0f && myInfo.lastCheckPoint.y == 0f) {
 			//Debug.Log ("setting spawn to level start");
 			myInfo.lastCheckPoint = initialSpawn.transform.position;
 		}
