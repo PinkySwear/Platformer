@@ -13,13 +13,10 @@ public class ItemInteraction : MonoBehaviour {
 	public GameObject textbox;
 	public float minFloor;
 	public float maxFloor;
+	public float doorHeight;
+	public int doorIndx;
 	
-	private int direction;
 	private bool down;
-	private float dogAngle;
-	public float initialDogAngle;
-	public float initialDogDistance;
-	private float dogDistance;
 	private bool seesDog;
 	private bool openDoor;
 	private DogControls dogC;
@@ -27,39 +24,25 @@ public class ItemInteraction : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		direction = 1;
 		originalPosition = transform.position;
 		dogC = dog.GetComponent<DogControls> ();
-		initialDogAngle = 45f;
-		initialDogDistance = 5f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		RaycastHit rh;
-		Vector3 eyePosition = transform.position + Vector3.up * 0.666f;
-		Vector3 dogDirection = dog.transform.position - eyePosition;
-		dogAngle = initialDogAngle;
-		dogDistance = initialDogDistance;
-		textbox.GetComponent<Text>().text = "";
 		if(isDoor){
-			if ((Vector3.Angle (dogDirection, Vector3.left * direction + Vector3.down) < dogAngle) ||
-			    (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle)) {
-				if (Physics.Raycast (eyePosition, dogDirection.normalized * dogDistance, out rh, dogDistance, ~(1 << LayerMask.NameToLayer ("Interactable")))) {
-					if ((rh.collider.tag == "Dog") || (rh.collider.tag == "Enemy")){
-						seesDog = true;
-						dogC.nearDoor = true;
-					}
-				}
+			if((Mathf.Abs(dog.GetComponent<Transform> ().position.x - transform.position.x) <= 5)
+				&& (Mathf.Abs(dog.GetComponent<Transform> ().position.y - transform.position.y) <= 5)
+			    && ((transform.position.y-dog.GetComponent<Transform> ().position.y) > 0)){
+				seesDog = true;
+				dogC.doorArray[doorIndx] = true;
+			}
+			else{
+				seesDog = false;
+				dogC.doorArray[doorIndx] = false;
 			}
 			if (seesDog & !openDoor){
-				if(needsKey){
-					textbox.GetComponent<Text>().text = "Press 'D' to Open Door";
-					Debug.Log(textbox.GetComponent<Text>().text);
-				}
-				if(dogC.openDoor){
-					Debug.Log(dogC.hasKey);
-				}
+				textbox.GetComponent<Text>().text = "Press 'D' to Open Door";
 				if (dogC.openDoor && ((dogC.hasKey && needsKey) || (!needsKey))){
 					openDoor = true;
 					if(needsKey){
@@ -71,12 +54,6 @@ public class ItemInteraction : MonoBehaviour {
 					textbox.GetComponent<Text>().text = "Door appears to be locked, a key may be necessary.";
 				}
 			}
-			//else if(!seesDog){
-			//	Debug.Log("hm?");
-			//	textbox.GetComponent<Text>().text = "";
-			//	dogC.nearDoor = false;
-			//}
-			//Debug.Log(openDoor);
 			if((openDoor & seesDog) && (transform.position.y <= originalPosition.y+5)){
 				transform.position = new Vector3 (transform.position.x,transform.position.y+0.1f,transform.position.z);
 			}
@@ -101,6 +78,5 @@ public class ItemInteraction : MonoBehaviour {
 				down = true;
 			}
 		}
-		seesDog = false;
 	}
 }

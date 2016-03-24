@@ -37,6 +37,7 @@ public class DogControls : MonoBehaviour {
 	public bool isDoor = false;
 	public bool nearDoor = false;
 	public bool openDoor = false;
+	public bool[] doorArray;
 	
 	public GameObject health5;
 	public GameObject health4;
@@ -44,6 +45,7 @@ public class DogControls : MonoBehaviour {
 	public GameObject health2;
 	public GameObject health1;
 	public GameObject health0;
+	public GameObject textbox2;
 
 	private float timesincelastattack;
 	private float timesincejump;
@@ -119,9 +121,14 @@ public class DogControls : MonoBehaviour {
 		for(int i = 1; i < observedArray.Length; i++) {
 			isObserved = observedArray[i] && isObserved;
 		}
-		if(!nearDoor){
-			openDoor = false;
+		bool allDoors = doorArray[0];
+		for(int i = 1; i < doorArray.Length; i++) {
+			allDoors = doorArray[i] || allDoors;
 		}
+		if(!allDoors){
+			textbox2.GetComponent<Text>().text = "";
+		}
+		openDoor = false;
 		textbox.GetComponent<Text>().text = "x "+keyCount;
 		health0.SetActive(false);
 		health1.SetActive(false);
@@ -210,12 +217,7 @@ public class DogControls : MonoBehaviour {
 				}
 				
 				if (Input.GetKey (KeyCode.D)) {
-					Debug.Log("D pressed!");
-					//Debug.Log(openDoor);
-					if(nearDoor){
-						Debug.Log("open door?");
-						openDoor = true;
-					}
+					openDoor = true;
 				}
 
 
