@@ -221,7 +221,7 @@ public class DogControls : MonoBehaviour {
 				}
 
 
-				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.1f && !gettingHit) {
+				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.4f && !gettingHit) {
 					biteSound.Play ();
 					if (nearEnemy) {
 						nearestEnemy.takeDamage (1);

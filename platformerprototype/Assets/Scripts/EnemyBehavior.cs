@@ -50,7 +50,7 @@ public class EnemyBehavior : MonoBehaviour {
 	/********************************
 	 * */
 
-
+	private float timesincelastblock;
 
 	public float attentionSpan;
 	private float attentionCountdown;
@@ -108,7 +108,7 @@ public class EnemyBehavior : MonoBehaviour {
 
 
 
-
+		timesincelastblock = 0f;
 
 		mesh = GetComponentInChildren<MeshFilter>().mesh;
 		meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -119,6 +119,7 @@ public class EnemyBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		timesincelastblock += Time.deltaTime;
 
 		transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 		if (!isDead) {
@@ -143,6 +144,7 @@ public class EnemyBehavior : MonoBehaviour {
 			if (Physics.Raycast (feetPosition, Vector3.right * direction, out rh, 1f, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog")))) {
 				if (rh.collider.tag == "Thingy" && !isDead && !jump) {
 					blocked = true;
+					timesincelastblock = 0f;
 				}
 			}
 			if (seesDog) {
@@ -151,7 +153,7 @@ public class EnemyBehavior : MonoBehaviour {
 				}
 				focusDirection = dogDirection;
 				dogAngle = 180;
-				speed = 6.5f;
+				speed = 7f;
 				if (Vector3.Distance (transform.position, dog.transform.position) < 2f) {
 					speed = 0f;
 				}
@@ -174,7 +176,12 @@ public class EnemyBehavior : MonoBehaviour {
 					notice.GetComponent<MeshRenderer>().enabled = false;
 					dogC.observedArray[num-1] = true;
 					if(blocked && !jump && onSomething) {
-						if (Random.value > 0.8f) {
+						if (timesincelastblock > 0.3f) {
+							if (Random.value > 0.8f) {
+								jump = true;
+							}
+						}
+						else if (Random.value > 2f * timesincelastblock + 0.2f) {
 							jump = true;
 						}
 						else {
@@ -395,12 +402,19 @@ public class EnemyBehavior : MonoBehaviour {
 
 
 	void updateMeshMaterial () {
-		for (i = 0; i < materials.Count; i++)
-		{
-			if (meshRenderer.material != materials[i])
-			{
-				meshRenderer.material = materials[i];
-			}
+//		for (i = 0; i < materials.Count; i++)
+//		{
+//			if (meshRenderer.material != materials[i])
+//			{
+//				meshRenderer.material = materials[i];
+//			}
+//		}
+
+		if (seesDog) {
+			meshRenderer.material = materials [1];
+		}
+		else {
+			meshRenderer.material = materials [0];
 		}
 	}
 
