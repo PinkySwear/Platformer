@@ -1,0 +1,141 @@
+fileFormatVersion: 2
+guid: ce80e67ed09e64187a8ce990f9864dfd
+timeCreated: 1458858107
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: NPC Enemy hurt_0
+    21300002: NPC Enemy hurt_1
+    21300004: NPC Enemy hurt_2
+    21300006: NPC Enemy hurt_3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 200
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: NPC Enemy hurt_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 130
+        height: 222
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: 105}
+        - {x: -53, y: 93}
+        - {x: -53, y: -111}
+        - {x: 43, y: -111}
+        - {x: 65, y: -46}
+        - {x: 65, y: 94}
+        - {x: 56, y: 105}
+    - name: NPC Enemy hurt_1
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 0
+        width: 130
+        height: 222
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -15, y: 105}
+        - {x: -54, y: 78}
+        - {x: -54, y: -111}
+        - {x: 60, y: -111}
+        - {x: 65, y: -79}
+        - {x: 65, y: 101}
+        - {x: 55, y: 105}
+      - - {x: -65, y: 61}
+        - {x: -65, y: -1}
+        - {x: -61, y: -1}
+        - {x: -55, y: 4}
+        - {x: -55, y: 52}
+        - {x: -61, y: 61}
+    - name: NPC Enemy hurt_2
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 0
+        width: 130
+        height: 222
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -15, y: 105}
+        - {x: -54, y: 78}
+        - {x: -54, y: -111}
+        - {x: 60, y: -111}
+        - {x: 65, y: -79}
+        - {x: 65, y: 101}
+        - {x: 55, y: 105}
+    - name: NPC Enemy hurt_3
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 0
+        width: 130
+        height: 222
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -39, y: 105}
+        - {x: -65, y: 78}
+        - {x: -65, y: -11}
+        - {x: -62, y: -10}
+        - {x: -58, y: -111}
+        - {x: 44, y: -111}
+        - {x: 65, y: -49}
+        - {x: 65, y: 99}
+        - {x: 50, y: 105}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

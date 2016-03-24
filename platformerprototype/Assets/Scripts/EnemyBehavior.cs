@@ -62,12 +62,15 @@ public class EnemyBehavior : MonoBehaviour {
 	private bool isAttacking;
 
 	private float timesincelastattack;
+	private float timesincelastjump;
 
 	public bool nearDog;
 	private DogControls dogC;
 	private float attackCD;
 
 	private AudioSource hitSound;
+	public bool gettingHit = false;
+	public float timesincelasthit = 0f;
 
 
 
@@ -110,6 +113,7 @@ public class EnemyBehavior : MonoBehaviour {
 
 
 		timesincelastblock = 0f;
+		timesincelastjump = 0f;
 
 		mesh = GetComponentInChildren<MeshFilter>().mesh;
 		meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -121,8 +125,10 @@ public class EnemyBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		timesincelastblock += Time.deltaTime;
 
+
+		timesincelastblock += Time.deltaTime;
+		timesincelastjump += Time.deltaTime;
 		transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 		if (!isDead) {
 
@@ -149,9 +155,11 @@ public class EnemyBehavior : MonoBehaviour {
 					timesincelastblock = 0f;
 				}
 			}
+
 			if (seesDog) {
-				if(blocked && !jump && onSomething) {
+				if(blocked && !jump && onSomething && timesincelastjump > 0.05f) {
 					jump = true;
+					timesincelastjump = 0f;
 				}
 				focusDirection = dogDirection;
 				dogAngle = 180;
@@ -177,14 +185,16 @@ public class EnemyBehavior : MonoBehaviour {
 					viewDistance = initialviewDistance;
 					notice.GetComponent<MeshRenderer>().enabled = false;
 					dogC.observedArray[num-1] = true;
-					if(blocked && !jump && onSomething) {
+					if(blocked && !jump && onSomething && timesincelastjump > 0.05f) {
 						if (timesincelastblock > 0.3f) {
 							if (Random.value > 0.8f) {
 								jump = true;
+								timesincelastjump = 0f;
 							}
 						}
 						else if (Random.value > 2f * timesincelastblock + 0.2f) {
 							jump = true;
+							timesincelastjump = 0f;
 						}
 						else {
 							direction = direction * -1;
@@ -195,6 +205,9 @@ public class EnemyBehavior : MonoBehaviour {
 					speed = 0f;
 					attentionCountdown -= Time.deltaTime;
 				}
+			}
+			if (gettingHit) {
+				speed = 0f;
 			}
 			seesDog = false;
 			if (Vector3.Distance (dog.transform.position, transform.position) < 2f) {
@@ -231,7 +244,7 @@ public class EnemyBehavior : MonoBehaviour {
 				if (nearDog) {
 					attackCD -= Time.deltaTime;
 				}
-				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit) && seesDog) {
+				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit) && seesDog && !gettingHit) {
 //					Debug.Log ("I ATTACKED");
 					hitSound.Play ();
 					dogC.takeDamage (1);
@@ -285,7 +298,18 @@ public class EnemyBehavior : MonoBehaviour {
 				isAttacking = false;
 			}
 		}
+
+		if (gettingHit) {
+			speed = 0f;
+			timesincelasthit += Time.deltaTime;
+			if (timesincelasthit > 0.3f) {
+				gettingHit = false;
+			}
+		}
+
+		anim.SetBool ("isHit", gettingHit);
 		anim.SetBool ("isAttacking", isAttacking);
+
 
 	}
 
@@ -315,6 +339,8 @@ public class EnemyBehavior : MonoBehaviour {
 	}
 
 	public void takeDamage (int dm) {
+		gettingHit = true;
+		timesincelasthit = 0f;
 		health -= dm;
 		if (health == 0) {
 			isDead = true;
