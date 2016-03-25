@@ -353,7 +353,7 @@ public class DogControls : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			//Debug.Log("enemy triggered");
 			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
-			if (!tempE.isDead) {
+			if (tempE != null && !tempE.isDead) {
 				nearestEnemy = tempE;
 				nearEnemy = true;
 				//Debug.Log("IAMCLOSE TO AN ENEMY");
@@ -381,7 +381,7 @@ public class DogControls : MonoBehaviour {
 	void OnTriggerStay(Collider other) {
 		if (other.gameObject.tag == "Enemy") {
 			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
-			if (!tempE.isDead) {
+			if (tempE != null && !tempE.isDead) {
 				nearestEnemy = tempE;
 				nearEnemy = true;
 			}

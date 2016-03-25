@@ -72,12 +72,20 @@ public class EnemyBehavior : MonoBehaviour {
 	public bool gettingHit = false;
 	public float timesincelasthit = 0f;
 
+	public GameObject infoObj;
+	private PlayerInfo myInfo;
 
 
 
 
 	// Use this for initialization
 	void Start () {
+
+		if (infoObj == null) {
+			infoObj = GameObject.Find ("PlayerInfo");
+		}
+		infoObj = GameObject.Find ("PlayerInfo");
+		myInfo = infoObj.GetComponent<PlayerInfo> ();
 
 		anim = GetComponent<Animator>();
 		timesincelastattack = 0f;
@@ -355,6 +363,7 @@ public class EnemyBehavior : MonoBehaviour {
 		health -= dm;
 		if (health == 0) {
 			isDead = true;
+			myInfo.enemiesKilled++;
 		}
 	}
 

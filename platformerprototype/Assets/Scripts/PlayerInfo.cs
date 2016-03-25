@@ -6,7 +6,7 @@ public class PlayerInfo : MonoBehaviour {
 
 	public Vector3 lastCheckPoint;
 	public int enemiesKilled;
-	public float timeDetected;
+	public int timesDetected;
 	public float timeElapsed;
 
 	public static PlayerInfo Instance;
