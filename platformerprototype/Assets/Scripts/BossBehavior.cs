@@ -91,7 +91,7 @@ public class BossBehavior : MonoBehaviour {
 		timesincelastattack = 0f;
 		direction = 1;
 		isDead = false;
-		initialSpeed = 4f;
+		initialSpeed = 5f;
 		initialDogAngle = 90;
 		initialviewDistance = 10f;
 		attentionSpan = 5f;
@@ -101,7 +101,7 @@ public class BossBehavior : MonoBehaviour {
 		myRb.freezeRotation = true;
 		//myRend = GetComponent<Renderer> ();
 		if (myType == 0) {
-			health = 2;
+			health = 5;
 		}
 		else if (myType == 1) {
 			health = 1;
@@ -154,10 +154,10 @@ public class BossBehavior : MonoBehaviour {
 			bool blocked = false;
 			eyePosition = transform.position + Vector3.up * 0.666f;
 			feetPosition = transform.position + Vector3.down * 1f;
-			Debug.DrawLine (feetPosition, feetPosition + (Vector3.right * direction).normalized * 10f, Color.red);
+			Debug.DrawLine (feetPosition, feetPosition + (Vector3.right * direction).normalized * 4f, Color.red);
 
 			Vector3 dogDirection = dog.transform.position - eyePosition;
-			if (Physics.Raycast (feetPosition, Vector3.right * direction, out rh, 10f, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog")))) {
+			if (Physics.Raycast (feetPosition, Vector3.right * direction, out rh, 4f, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog")))) {
 				if (rh.collider.tag == "Thingy" && !isDead && !jump) {
 					blocked = true;
 					timesincelastblock = 0f;
