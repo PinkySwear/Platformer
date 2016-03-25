@@ -34,15 +34,26 @@ public class NPCControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if((Mathf.Abs(dog.GetComponent<Transform> ().position.x - transform.position.x) <= 5)
-		&& (Mathf.Abs(dog.GetComponent<Transform> ().position.y - transform.position.y) <= 5)
+		if((Mathf.Abs(dog.GetComponent<Transform> ().position.x - transform.position.x) <= 3)
+		&& (Mathf.Abs(dog.GetComponent<Transform> ().position.y - transform.position.y) <= 3)
 		&& ((transform.position.y-dog.GetComponent<Transform> ().position.y) > 0)){
 			seesDog = true;
+			Debug.Log(scene);
 			dogC.sceneArray[NPC] = true;
+			if(scene == 6 || scene ==7 || scene == 8){
+				Debug.Log("hello?");
+				GetComponent<EnemyBehavior>().seesDog = false;
+				dogC.observedArray[11] = true;
+			}
 		}
 		else{
 			seesDog = false;
 			dogC.sceneArray[NPC] = false;
+			if(scene == 6 || scene ==7 || scene == 8){
+				Debug.Log("hello?");
+				GetComponent<EnemyBehavior>().seesDog = false;
+				dogC.observedArray[11] = true;
+			}
 		}
 		if(!isDead){
 			if((NPC == 0) && seesDog){
@@ -87,8 +98,10 @@ public class NPCControl : MonoBehaviour {
 				}
 				if(scene == 6){
 					GetComponent<EnemyBehavior>().seesDog = false;
+					dogC.observedArray[11] = false;
 				}
 				if(scene == 7 && (Input.GetKey (KeyCode.D))){
+					dogC.observedArray[11] = false;
 					textbox.GetComponent<Text>().text = "Thank you, the elevator has been activated.";
 					elevatorC.needsLever = false;
 					doorC.needsKey = false;
@@ -96,6 +109,7 @@ public class NPCControl : MonoBehaviour {
 					scene = 8;
 				}
 				if(scene == 7 && (Input.GetKey (KeyCode.A))){
+					dogC.observedArray[11] = false;
 					textbox.GetComponent<Text>().text = "Ugh you killed me!";
 					doorC.needsKey = false;
 					dogC.moralChoice = false;
