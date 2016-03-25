@@ -49,6 +49,7 @@
      <Compile Include="Assets\FieldOfView2D\Scripts\FOV2DVisionCone.cs" />
      <Compile Include="Assets\FieldOfView2D\Scripts\SampleScript\GuardSample.cs" />
      <Compile Include="Assets\Scripts\BeginGame.cs" />
+     <Compile Include="Assets\Scripts\BossBehavior.cs" />
      <Compile Include="Assets\Scripts\CameraControl.cs" />
      <Compile Include="Assets\Scripts\CutSceneControl.cs" />
      <Compile Include="Assets\Scripts\DogControllerScript.cs" />

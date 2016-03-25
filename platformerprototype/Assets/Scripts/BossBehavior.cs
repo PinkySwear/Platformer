@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemyBehavior : MonoBehaviour {
+public class BossBehavior : MonoBehaviour {
 
 	Animator anim;
 
@@ -11,7 +11,7 @@ public class EnemyBehavior : MonoBehaviour {
 	private Rigidbody myRb;
 	public GameObject dog;
 	//public GameObject noticePrefab;
-	public GameObject notice;
+//	public GameObject notice;
 	public bool seesDog = false;
 	//private Renderer myRend;
 	private float speed;
@@ -110,10 +110,10 @@ public class EnemyBehavior : MonoBehaviour {
 		dogC = dog.GetComponent<DogControls> ();
 		attackCD = 1f;
 		//Debug.Log("Interaction"+num);
-		notice =  GameObject.Find("Interaction"+num);
+//		notice =  GameObject.Find("Interaction"+num);
 		hitSound = GetComponent<AudioSource> ();
 		////Debug.Log(notice);
-		notice.GetComponent<MeshRenderer>().enabled = false;
+//		notice.GetComponent<MeshRenderer>().enabled = false;
 
 		focusDirection = new Vector3 (direction, -0.9f, 0f);
 		coneQuality = 1;
@@ -130,7 +130,7 @@ public class EnemyBehavior : MonoBehaviour {
 		timesincedeath = 0f;
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -139,7 +139,7 @@ public class EnemyBehavior : MonoBehaviour {
 		timesincelastjump += Time.deltaTime;
 		transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 		if (!isDead) {
-
+			anim.SetBool ("isDead", false);
 			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.15f;
 			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.15f;
 
@@ -154,10 +154,10 @@ public class EnemyBehavior : MonoBehaviour {
 			bool blocked = false;
 			eyePosition = transform.position + Vector3.up * 0.666f;
 			feetPosition = transform.position + Vector3.down * 1f;
-			Debug.DrawLine (feetPosition, feetPosition + (Vector3.right * direction).normalized, Color.red);
+			Debug.DrawLine (feetPosition, feetPosition + (Vector3.right * direction).normalized * 10f, Color.red);
 
 			Vector3 dogDirection = dog.transform.position - eyePosition;
-			if (Physics.Raycast (feetPosition, Vector3.right * direction, out rh, 1f, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog")))) {
+			if (Physics.Raycast (feetPosition, Vector3.right * direction, out rh, 10f, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog")))) {
 				if (rh.collider.tag == "Thingy" && !isDead && !jump) {
 					blocked = true;
 					timesincelastblock = 0f;
@@ -172,8 +172,9 @@ public class EnemyBehavior : MonoBehaviour {
 				focusDirection = dogDirection;
 				dogAngle = 180;
 				speed = 7f;
-				if (Vector3.Distance (transform.position, dog.transform.position) < 1.5f) {
+				if (Vector3.Distance (transform.position, dog.transform.position) < 3f) {
 					speed = 0f;
+//					nearDog = true;
 				}
 				viewDistance = 10f;
 				if (dogDirection.x < 0) {
@@ -194,10 +195,10 @@ public class EnemyBehavior : MonoBehaviour {
 						dogAngle = initialDogAngle;
 					}
 					focusDirection = new Vector3 (direction, -0.9f, 0f);
-//					dogAngle = initialDogAngle;
+					//					dogAngle = initialDogAngle;
 					speed = initialSpeed;
 					viewDistance = initialviewDistance;
-					notice.GetComponent<MeshRenderer>().enabled = false;
+//					notice.GetComponent<MeshRenderer>().enabled = false;
 					dogC.observedArray[num-1] = true;
 					if(blocked && !jump && onSomething && timesincelastjump > 0.1f) {
 						if (timesincelastblock > 0.3f) {
@@ -229,39 +230,42 @@ public class EnemyBehavior : MonoBehaviour {
 				//Debug.Log("I see you!");
 				dogC.observedArray[num-1] = false;
 			}
-//			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
-//				if (Physics.Raycast (eyePosition, dogDirection.normalized * viewDistance, out rh, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 <<LayerMask.NameToLayer("Enemy")))) {
-//					if (rh.collider.tag == "Dog") {
-////						Debug.Log ("I SAW THE FUCKING DOG");
-//						seesDog = true;
-//						dogC.observedArray[num-1] = false;
-//						notice.GetComponent<MeshRenderer>().enabled = true;
-//						Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
-//						notice.transform.position = temp;
-//						//Debug.Log("SEEN!");
-//					}
-//				}
-//			}
-				
+			//			if (Vector3.Angle (dogDirection, Vector3.right * direction + Vector3.down) < dogAngle) {
+			//				if (Physics.Raycast (eyePosition, dogDirection.normalized * viewDistance, out rh, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 <<LayerMask.NameToLayer("Enemy")))) {
+			//					if (rh.collider.tag == "Dog") {
+			////						Debug.Log ("I SAW THE FUCKING DOG");
+			//						seesDog = true;
+			//						dogC.observedArray[num-1] = false;
+			//						notice.GetComponent<MeshRenderer>().enabled = true;
+			//						Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
+			//						notice.transform.position = temp;
+			//						//Debug.Log("SEEN!");
+			//					}
+			//				}
+			//			}
 
-//			Debug.DrawRay (eyePosition, dogDirection.normalized * viewDistance, Color.green);
-//			Debug.DrawRay (eyePosition, Vector3.right * direction * viewDistance, Color.red);
-//			Debug.DrawRay (eyePosition, Vector3.down * viewDistance, Color.red);
+
+			//			Debug.DrawRay (eyePosition, dogDirection.normalized * viewDistance, Color.green);
+			//			Debug.DrawRay (eyePosition, Vector3.right * direction * viewDistance, Color.red);
+			//			Debug.DrawRay (eyePosition, Vector3.down * viewDistance, Color.red);
 			transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 			myRb.velocity = new Vector3 (direction * speed, myRb.velocity.y, myRb.velocity.z);
 
 			Vector3 s = transform.localScale;
-			s.x = direction * 3f;
+			s.x = direction * 2f;
 			transform.localScale = s;
 
+//			Debug.Log (myType);
 			if (myType == 0) {
 				if (nearDog) {
 					attackCD -= Time.deltaTime;
 				}
-				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit) && seesDog && !gettingHit) {
-//					Debug.Log ("I ATTACKED");
+//				Debug.Log ("(" + (nearDog) + "|" +  (attackCD <= 0f) + "|" +  (!isDead) + "|" +  (!(dogC.gettingHit)) + "|" +  (seesDog) + "|" +  (!gettingHit));
+				if (nearDog && attackCD <= 0f && !isDead && !(dogC.gettingHit) && !gettingHit) {
+					Debug.Log ("I ATTACKED");
 					hitSound.Play ();
 					dogC.takeDamage (1);
+					dogC.myRb.AddForce (new Vector3(Mathf.Sign((dog.transform.position - transform.position).x) * 1000f, 1000f, 0f));
 					attackCD = 1f;
 					isAttacking = true;
 					timesincelastattack = 0f;
@@ -279,24 +283,25 @@ public class EnemyBehavior : MonoBehaviour {
 
 		}
 		else {
-//			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
-			if (timesincedeath < 0.01f) {
-				myRb.AddForce ((Vector3.up * 5f + Vector3.right * Mathf.Sign((transform.position - dog.transform.position).x) * 3f).normalized * 300f);
-//				myRb.AddForce ((Vector3.up * 5f).normalized * 300f);
-			}
+			//			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
+//			if (timesincedeath < 0.01f) {
+//				myRb.AddForce ((Vector3.up * 5f + Vector3.right * Mathf.Sign((transform.position - dog.transform.position).x) * 3f).normalized * 300f);
+//				//				myRb.AddForce ((Vector3.up * 5f).normalized * 300f);
+//			}
+			anim.SetBool ("isDead", true);
 			timesincedeath += Time.deltaTime;
 			dogC.observedArray[num-1] = true;
 			gameObject.layer = 9;
 			meshRenderer.enabled = false;
-			myRb.freezeRotation = false;
+//			myRb.freezeRotation = false;
 			myRb.AddTorque (new Vector3 (70f, 0f, 0f));
-//			myRb.AddTorque (new Vector3 (0f, 0f, direction * 90f));
-//			myRb.rotation = (Quaternion.Lerp(Quaternion.Euler(0f, 0f, 0f), Quaternion.Euler(0f, 0f, direction * 90f), timesincedeath * 2.5f));
-			transform.position = new Vector3 (transform.position.x, transform.position.y, 10f);
+			//			myRb.AddTorque (new Vector3 (0f, 0f, direction * 90f));
+			//			myRb.rotation = (Quaternion.Lerp(Quaternion.Euler(0f, 0f, 0f), Quaternion.Euler(0f, 0f, direction * 90f), timesincedeath * 2.5f));
+//			transform.position = new Vector3 (transform.position.x, transform.position.y, 10f);
 		}
-//		if (timesincelastattack < 0.1f) {
-			timesincelastattack += Time.deltaTime;
-//		}
+		//		if (timesincelastattack < 0.1f) {
+		timesincelastattack += Time.deltaTime;
+		//		}
 		if (speed == 0) {
 			anim.SetBool ("isIdling", true);
 			anim.SetBool ("isWalking", false);
@@ -306,7 +311,7 @@ public class EnemyBehavior : MonoBehaviour {
 			anim.SetBool ("isWalking", true);
 		}
 		if (isAttacking) {
-//			Debug.Log ("IAMATTACKING");
+			//			Debug.Log ("IAMATTACKING");
 			timesincelastattack += Time.deltaTime;
 			if (timesincelastattack > 0.2f) {
 				isAttacking = false;
@@ -366,11 +371,11 @@ public class EnemyBehavior : MonoBehaviour {
 		}
 	}
 
-//	void OnCollisionEnter (Collision collision) {
-//		if (collision.collider.tag == "Thingy" && !isDead) {
-//			direction = direction * -1;
-//		}
-//	}
+	//	void OnCollisionEnter (Collision collision) {
+	//		if (collision.collider.tag == "Thingy" && !isDead) {
+	//			direction = direction * -1;
+	//		}
+	//	}
 
 
 
@@ -380,7 +385,7 @@ public class EnemyBehavior : MonoBehaviour {
 		float currAngle = dogAngle / -2;
 
 		hits.Clear ();
-	
+
 
 		for (int i = 0; i < numRays; i++)
 		{
@@ -389,26 +394,26 @@ public class EnemyBehavior : MonoBehaviour {
 			hit = new RaycastHit();
 
 			if (Physics.Raycast (eyePosition, tempDirection, out hit, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy"))) == false) {		
-//				Debug.Log (hit.collider);
+				//				Debug.Log (hit.collider);
 				hit.point = eyePosition + (tempDirection * viewDistance);
 				hits.Add (hit);
 			}
 			else {
 				if (hit.collider.tag == "Dog") {
-//					hit.point = eyePosition + (tempDirection * viewDistance);
+					//					hit.point = eyePosition + (tempDirection * viewDistance);
 					seesDog = true;
 					dogC.observedArray [num - 1] = false;
-					notice.GetComponent<MeshRenderer> ().enabled = true;
+//					notice.GetComponent<MeshRenderer> ().enabled = true;
 					Vector3 temp = new Vector3 (transform.position.x, transform.position.y + 3, 0);
-					notice.transform.position = temp;
+//					notice.transform.position = temp;
 					hit.point = hit.collider.transform.position;
 					hits.Add (hit);
-//					if (Physics.Raycast (eyePosition, tempDirection, out hit, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog"))) == false) {		
-//						//				Debug.Log (hit.collider);
-//						hit.point = eyePosition + (tempDirection * viewDistance);
-//
-//					}
-//					hits.Add (hit);
+					//					if (Physics.Raycast (eyePosition, tempDirection, out hit, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog"))) == false) {		
+					//						//				Debug.Log (hit.collider);
+					//						hit.point = eyePosition + (tempDirection * viewDistance);
+					//
+					//					}
+					//					hits.Add (hit);
 
 				}
 				else {
@@ -416,7 +421,7 @@ public class EnemyBehavior : MonoBehaviour {
 				}
 			}
 
-//			hits.Add (hit);
+			//			hits.Add (hit);
 
 			currAngle += 1f / coneQuality;
 		}
@@ -472,13 +477,13 @@ public class EnemyBehavior : MonoBehaviour {
 
 
 	void updateMeshMaterial () {
-//		for (i = 0; i < materials.Count; i++)
-//		{
-//			if (meshRenderer.material != materials[i])
-//			{
-//				meshRenderer.material = materials[i];
-//			}
-//		}
+		//		for (i = 0; i < materials.Count; i++)
+		//		{
+		//			if (meshRenderer.material != materials[i])
+		//			{
+		//				meshRenderer.material = materials[i];
+		//			}
+		//		}
 
 		if (seesDog) {
 			meshRenderer.material = materials [1];
@@ -488,27 +493,27 @@ public class EnemyBehavior : MonoBehaviour {
 		}
 	}
 
-//	void OnDrawGizmosSelected()
-//	{
-//		Gizmos.color = Color.cyan;
-//
-//		if (true && hits.Count > 0) 
-//		{
-//			foreach (RaycastHit hit in hits)
-//			{
-//				Gizmos.DrawSphere(hit.point, 0.04f);
-//				Gizmos.DrawLine(transform.position, hit.point);
-//			}
-//		}
-//	}
+	//	void OnDrawGizmosSelected()
+	//	{
+	//		Gizmos.color = Color.cyan;
+	//
+	//		if (true && hits.Count > 0) 
+	//		{
+	//			foreach (RaycastHit hit in hits)
+	//			{
+	//				Gizmos.DrawSphere(hit.point, 0.04f);
+	//				Gizmos.DrawLine(transform.position, hit.point);
+	//			}
+	//		}
+	//	}
 
 
 
 
-//	void OnCollisionStay (Collision collision) {
-//		if (collision.collider.tag == "Thingy" && !isDead) {
-//			Debug.Log ("CHANGING DIRECTION");
-//			direction = direction * -1;
-//		}
-//	}
+	//	void OnCollisionStay (Collision collision) {
+	//		if (collision.collider.tag == "Thingy" && !isDead) {
+	//			Debug.Log ("CHANGING DIRECTION");
+	//			direction = direction * -1;
+	//		}
+	//	}
 }

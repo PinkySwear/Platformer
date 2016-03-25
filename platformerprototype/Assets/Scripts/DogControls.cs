@@ -8,12 +8,13 @@ public class DogControls : MonoBehaviour {
 	Animator anim;
 
 	public GameObject textbox;
+	public GameObject textboxhealth;
 	public GameObject textbox3;
 	public GameObject stupidBar;
 	
 	public float velocity;
 	public float jumpForce;
-	private Rigidbody myRb;
+	public Rigidbody myRb;
 	private bool onSomething = false;
 	private bool underSomething = false;
 	private bool movingLeft;
@@ -24,6 +25,7 @@ public class DogControls : MonoBehaviour {
 	public bool gettingHit = false;
 	public bool nearEnemy = false;
 	private EnemyBehavior nearestEnemy;
+	private BossBehavior nearestBoss;
 	public bool beginCutScene = false;
 	public int killNPC = 0;
 	public bool hasKey = false;
@@ -80,6 +82,7 @@ public class DogControls : MonoBehaviour {
 
 		anim = GetComponent<Animator>();
 		textbox.GetComponent<Text>().text = "x 0";
+		textboxhealth.GetComponent<Text>().text = "x 0";
 		myInfo = infoObj.GetComponent<PlayerInfo> ();
 //		GetComponent<Renderer>().material.mainTexture = walkSprite;
 
@@ -155,6 +158,7 @@ public class DogControls : MonoBehaviour {
 		}
 		openDoor = false;
 		textbox.GetComponent<Text>().text = "x "+keyCount;
+		textboxhealth.GetComponent<Text> ().text = "x " + healthKits;
 		health0.SetActive(false);
 		health1.SetActive(false);
 		health2.SetActive(false);
@@ -164,7 +168,7 @@ public class DogControls : MonoBehaviour {
 		
 		// Add !isObserved to make health bar only visible during combat
 		
-		if(myHealth ==0){
+		if(myHealth <= 0){
 			health0.SetActive(true);
 		}
 		else if(myHealth ==1){
@@ -250,7 +254,12 @@ public class DogControls : MonoBehaviour {
 				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.5f && !gettingHit) {
 					biteSound.Play ();
 					if (nearEnemy) {
-						nearestEnemy.takeDamage (1);
+						if (nearestEnemy != null) {
+							nearestEnemy.takeDamage (1);
+						}
+						else {
+							nearestBoss.takeDamage (1);
+						}
 
 					}
 					isAttacking = true;
@@ -302,16 +311,16 @@ public class DogControls : MonoBehaviour {
 	void FixedUpdate () {
 		transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 		if (!isDead) {
-			if (movingLeft) {
+			if (movingLeft && !gettingHit) {
 				//restrict movement to one plane
 //				transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 				myRb.velocity = new Vector3 (-1 * velocity, myRb.velocity.y, myRb.velocity.z);
 			}
-			if (movingRight) {
+			if (movingRight && !gettingHit) {
 //				transform.position = new Vector3 (transform.position.x, transform.position.y, 0f);
 				myRb.velocity = new Vector3 (velocity, myRb.velocity.y, myRb.velocity.z);
 			}
-			if (crouching) {
+			if (crouching && !gettingHit) {
 				BoxCollider c = gameObject.GetComponent<BoxCollider> ();
 				c.center = new Vector3 (0.15f, -0.175f, 0f);
 				c.size = new Vector3 (0.5f, 0.25f, 0.4f);
@@ -327,7 +336,7 @@ public class DogControls : MonoBehaviour {
 				
 				velocity = 5f;
 			}
-			else if (!gettingHit){
+			else if (!gettingHit) {
 				transform.localScale = new Vector3 (transform.localScale.x, 2f, 1f);
 				velocity = 10f;
 			}
@@ -341,10 +350,15 @@ public class DogControls : MonoBehaviour {
 					timesincejump += Time.deltaTime;
 				}
 			}
-			if (!movingRight && !movingLeft) {
+			if (!movingRight && !movingLeft && !gettingHit) {
 				myRb.velocity = new Vector3 (0f, myRb.velocity.y, myRb.velocity.z);
 			}
 			transform.rotation = Quaternion.Euler (Vector3.zero);
+		}
+		else {
+			BoxCollider c = gameObject.GetComponent<BoxCollider> ();
+			c.center = new Vector3 (0.15f, -0.175f, 0f);
+			c.size = new Vector3 (0.5f, 0.25f, 0.4f);
 		}
 	}
 
@@ -353,7 +367,15 @@ public class DogControls : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			//Debug.Log("enemy triggered");
 			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
-			if (tempE != null && !tempE.isDead) {
+			BossBehavior tempB;
+			if (tempE == null) {
+				tempB = other.gameObject.GetComponent<BossBehavior> ();
+				if (tempB != null && !tempB.isDead) {
+					nearestBoss = tempB;
+					nearEnemy = true;
+				}
+			}
+			else if (tempE != null && !tempE.isDead) {
 				nearestEnemy = tempE;
 				nearEnemy = true;
 				//Debug.Log("IAMCLOSE TO AN ENEMY");
@@ -374,6 +396,7 @@ public class DogControls : MonoBehaviour {
 		}
 		if (other.gameObject.tag == "Checkpoint") {
 			myInfo.lastCheckPoint = other.gameObject.transform.position;
+			keyCount = 0;
 //			lastCheckpoint = other.gameObject.transform.position;
 		}
 	}
@@ -381,7 +404,15 @@ public class DogControls : MonoBehaviour {
 	void OnTriggerStay(Collider other) {
 		if (other.gameObject.tag == "Enemy") {
 			EnemyBehavior tempE = other.gameObject.GetComponent<EnemyBehavior> ();
-			if (tempE != null && !tempE.isDead) {
+			BossBehavior tempB;
+			if (tempE == null) {
+				tempB = other.gameObject.GetComponent<BossBehavior> ();
+				if (tempB != null && !tempB.isDead) {
+					nearestBoss = tempB;
+					nearEnemy = true;
+				}
+			}
+			else if (tempE != null && !tempE.isDead) {
 				nearestEnemy = tempE;
 				nearEnemy = true;
 			}
