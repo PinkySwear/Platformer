@@ -99,6 +99,15 @@ public class NPCControl : MonoBehaviour {
 					scene = 8;
 				}
 			}
+			else if((NPC == 2) && seesDog){
+				if(firstContact2){
+					firstContact2 = false;
+					if(!dogC.beginCutScene){
+						GetComponent<EnemyBehavior>().enabled = true;
+						beginThirdNPCScene();
+					}
+				}
+			}
 		}
 	}
 	
@@ -127,6 +136,12 @@ public class NPCControl : MonoBehaviour {
 		options.GetComponent<Text>().text = "Press 'd' to spare the Thug, 'a' to eliminate.";
 		dogC.moralChoice = true;
 		scene = 6;
+		StartCoroutine(TypeText ());
+	}
+	
+	void beginThirdNPCScene(){
+		dogC.beginCutScene = true;
+		textbox.GetComponent<Text>().text = "You can’t resist The Authority, Eric. Take the information drop, run back to your masters with your tail between your legs, and in three days you’ll go back to shaving your face and sleeping in a bed. You can only win if you play the game, Avery. This is the way it has to be. ";
 		StartCoroutine(TypeText ());
 	}
 	
@@ -159,6 +174,13 @@ public class NPCControl : MonoBehaviour {
 			GetComponent<EnemyBehavior>().enabled = false;
 			transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1f);
 			scene = 7;
+		}
+		
+		if(scene == 9){
+			yield return new WaitForSeconds (5);
+			dogC.beginCutScene = false;
+			GetComponent<EnemyBehavior>().enabled = true;
+			scene = 10;
 		}
 	}
 }

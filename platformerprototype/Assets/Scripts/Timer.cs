@@ -15,20 +15,19 @@ public class Timer : MonoBehaviour {
    
 	// Use this for initialization
 	void Start () {
-		//audio = GetComponent<AudioSource>();
+		audio = GetComponent<AudioSource>();
 		Invoke( "ChangeLevel", 4.8f );
-		//Invoke ("PlayMenu", 4.7f);
+		Invoke ("PlayMenu", 4.7f);
  }
  
  void ChangeLevel() {
-//		SceneManager.LoadScene ((SceneManager.GetActiveScene().buildIndex + 1)); 
 		SceneManager.LoadScene ("Menu"); 
  	}
 
- //void PlayMenu(){
-		//audio.PlayOneShot(menuSound, 0.6F);
-		//Debug.Log("menu sound called");
- 		//}
+ void PlayMenu(){
+		audio.PlayOneShot(menuSound, 0.6F);
+		Debug.Log("menu sound called");
+ 		}
 
 }
 
