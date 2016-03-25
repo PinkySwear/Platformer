@@ -8,7 +8,9 @@ public class DogControls : MonoBehaviour {
 	Animator anim;
 
 	public GameObject textbox;
-
+	public GameObject textbox3;
+	public GameObject stupidBar;
+	
 	public float velocity;
 	public float jumpForce;
 	private Rigidbody myRb;
@@ -38,6 +40,10 @@ public class DogControls : MonoBehaviour {
 	public bool nearDoor = false;
 	public bool openDoor = false;
 	public bool[] doorArray;
+	public bool[] switchArray;
+	public bool[] sceneArray;
+	public bool moralChoice;
+	public bool hasNPCKit;
 	
 	public GameObject health5;
 	public GameObject health4;
@@ -122,11 +128,28 @@ public class DogControls : MonoBehaviour {
 			isObserved = observedArray[i] && isObserved;
 		}
 		bool allDoors = doorArray[0];
+		bool allSwitches = switchArray[0];
+		bool allScenes = sceneArray[0];
 		for(int i = 1; i < doorArray.Length; i++) {
 			allDoors = doorArray[i] || allDoors;
 		}
-		if(!allDoors){
+		for(int i = 1; i < switchArray.Length; i++) {
+			allSwitches = switchArray[i] || allSwitches;
+		}
+		for(int i = 1; i < sceneArray.Length; i++) {
+			allScenes = sceneArray[i] || allScenes;
+		}
+		if(!allDoors && !allSwitches && !moralChoice){
 			textbox2.GetComponent<Text>().text = "";
+		}
+		if(!allScenes){
+			textbox3.GetComponent<Text>().text = "";
+		}
+		if(!allDoors && !allSwitches && !moralChoice && !allScenes){
+			 stupidBar.SetActive(false);
+		}
+		else{
+			stupidBar.SetActive(true);
 		}
 		openDoor = false;
 		textbox.GetComponent<Text>().text = "x "+keyCount;
@@ -246,51 +269,8 @@ public class DogControls : MonoBehaviour {
 
 			}
 			else {
-				if (Input.GetKey (KeyCode.Return)) {
-					enterNewRoom = 1;
-					//Debug.Log ("ENTER");
-					Debug.Log(level);
-					if(level==0){
-						transform.position = new Vector3 (54f,12f,0f);
-						beginCutScene = false;
-					}
-					else if(level==1){
-						transform.position = new Vector3 (200f,-3f,0f);
-						beginCutScene = false;
-					}
-					else if(level==2){
-						transform.position = new Vector3 (73.7f,23.9f,0f);
-						Debug.Log("Right?");
-						beginCutScene = false;
-						
-					}
-					else if(level==3){
-						transform.position = new Vector3 (215.84f,-16.52f,0f);
-						beginCutScene = false;
-					}
-					level++;
-				}
-				if (Input.GetKey (KeyCode.D)) {
-					enterNewRoom = 2;
-					//Debug.Log ("EXIT");
-					beginCutScene = false;
-				}
-				if (Input.GetKey (KeyCode.A)) {
-					enterNewRoom = 1;
-					//Debug.Log ("KILL");
-					beginCutScene = false;
-				}
-				if (Input.GetKey (KeyCode.S)) {
-					enterNewRoom = 2;
-					//Debug.Log ("SAVE");
-					beginCutScene = false;
-				}
-				if (Input.GetKey (KeyCode.W)) {
-					enterHack = 0;
-					//Debug.Log("NEWROOM");
-					beginCutScene = false;
-					SceneManager.LoadScene ("BasicMaze");
-				}
+				movingLeft = false;
+				movingRight = false;
 			}
 		}
 		else {
@@ -384,6 +364,10 @@ public class DogControls : MonoBehaviour {
 		if (other.gameObject.tag == "Health") {
 			Destroy (other.gameObject);
 			healthKits++;
+		}
+		if (other.gameObject.tag == "NPCHealth"){
+			Destroy (other.gameObject);
+			hasNPCKit = true;
 		}
 		if (other.gameObject.tag == "Checkpoint") {
 			myInfo.lastCheckPoint = other.gameObject.transform.position;

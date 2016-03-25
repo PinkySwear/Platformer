@@ -8,6 +8,7 @@ public class ItemInteraction : MonoBehaviour {
 	public GameObject key;
 	public GameObject dog;
 	public bool isDoor;
+	public bool isSwitch;
 	public bool needsKey;
 	public bool needsLever;
 	public GameObject textbox;
@@ -41,7 +42,7 @@ public class ItemInteraction : MonoBehaviour {
 				seesDog = false;
 				dogC.doorArray[doorIndx] = false;
 			}
-			if (seesDog & !openDoor){
+			if (seesDog && !openDoor && !dogC.moralChoice){
 				textbox.GetComponent<Text>().text = "Press 'D' to Open Door";
 				if (dogC.openDoor && ((dogC.hasKey && needsKey) || (!needsKey))){
 					openDoor = true;
@@ -50,7 +51,7 @@ public class ItemInteraction : MonoBehaviour {
 						dogC.hasKey = false;
 					}
 				}
-				else if(dogC.openDoor){
+				else if(dogC.openDoor && !dogC.moralChoice){
 					textbox.GetComponent<Text>().text = "Door appears to be locked, a key may be necessary.";
 				}
 			}
@@ -65,17 +66,38 @@ public class ItemInteraction : MonoBehaviour {
 			}
 		}
 		else if(!needsLever){
-			if(down){
-				transform.position = new Vector3 (transform.position.x,transform.position.y-0.1f,transform.position.z);
+			if(!isSwitch){
+				if(down){
+					transform.position = new Vector3 (transform.position.x,transform.position.y-0.1f,transform.position.z);
+				}
+				else{
+					transform.position = new Vector3 (transform.position.x,transform.position.y+0.1f,transform.position.z);
+				}
+				if(transform.position.y < minFloor){
+					down = false;
+				}
+				else if(transform.position.y > maxFloor){
+					down = true;
+				}
 			}
 			else{
-				transform.position = new Vector3 (transform.position.x,transform.position.y+0.1f,transform.position.z);
-			}
-			if(transform.position.y < minFloor){
-				down = false;
-			}
-			else if(transform.position.y > maxFloor){
-				down = true;
+				if((Mathf.Abs(dog.GetComponent<Transform> ().position.x - transform.position.x) <= 5)
+				&& (Mathf.Abs(dog.GetComponent<Transform> ().position.y - transform.position.y) <= 5)
+			    && ((transform.position.y-dog.GetComponent<Transform> ().position.y) > 0)){
+					seesDog = true;
+					dogC.switchArray[doorIndx] = true;
+				}
+				else{
+					seesDog = false;
+					dogC.switchArray[doorIndx] = false;
+				}
+				if(seesDog && !dogC.moralChoice){
+					textbox.GetComponent<Text>().text = "Press 'D' to Activate Elevator";
+					if(dogC.openDoor){
+						lever.GetComponent<ItemInteraction> ().needsLever = false;
+						textbox.GetComponent<Text>().text = "Elevator has been activated.";
+					}
+				}
 			}
 		}
 	}
