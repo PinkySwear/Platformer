@@ -157,14 +157,14 @@ public class EnemyBehavior : MonoBehaviour {
 			}
 
 			if (seesDog) {
-				if(blocked && !jump && onSomething && timesincelastjump > 0.05f) {
+				if(blocked && !jump && onSomething && timesincelastjump > 0.1f) {
 					jump = true;
 					timesincelastjump = 0f;
 				}
 				focusDirection = dogDirection;
 				dogAngle = 180;
 				speed = 7f;
-				if (Vector3.Distance (transform.position, dog.transform.position) < 2f) {
+				if (Vector3.Distance (transform.position, dog.transform.position) < 1.5f) {
 					speed = 0f;
 				}
 				viewDistance = 10f;
@@ -177,15 +177,21 @@ public class EnemyBehavior : MonoBehaviour {
 				attentionCountdown = 2f;
 			}
 			else {
-				
+
 				if (attentionCountdown < 0f) {
+					if (dogAngle > initialDogAngle) {
+						dogAngle = dogAngle - 5;
+					}
+					else if (dogAngle < initialDogAngle) {
+						dogAngle = initialDogAngle;
+					}
 					focusDirection = new Vector3 (direction, -0.9f, 0f);
-					dogAngle = initialDogAngle;
+//					dogAngle = initialDogAngle;
 					speed = initialSpeed;
 					viewDistance = initialviewDistance;
 					notice.GetComponent<MeshRenderer>().enabled = false;
 					dogC.observedArray[num-1] = true;
-					if(blocked && !jump && onSomething && timesincelastjump > 0.05f) {
+					if(blocked && !jump && onSomething && timesincelastjump > 0.1f) {
 						if (timesincelastblock > 0.3f) {
 							if (Random.value > 0.8f) {
 								jump = true;
@@ -280,9 +286,9 @@ public class EnemyBehavior : MonoBehaviour {
 //			myRb.rotation = (Quaternion.Lerp(Quaternion.Euler(0f, 0f, 0f), Quaternion.Euler(0f, 0f, direction * 90f), timesincedeath * 2.5f));
 			transform.position = new Vector3 (transform.position.x, transform.position.y, 10f);
 		}
-		if (timesincelastattack < 0.1f) {
+//		if (timesincelastattack < 0.1f) {
 			timesincelastattack += Time.deltaTime;
-		}
+//		}
 		if (speed == 0) {
 			anim.SetBool ("isIdling", true);
 			anim.SetBool ("isWalking", false);
@@ -328,7 +334,12 @@ public class EnemyBehavior : MonoBehaviour {
 			if (!dogC.isDead) {
 				nearDog = true;
 			}
-			attackCD = 0.5f;
+			if (timesincelastattack > 2f) {
+				attackCD = 0.25f;
+			}
+			else {
+				attackCD = 1f;
+			}
 		}
 	}
 
@@ -372,19 +383,32 @@ public class EnemyBehavior : MonoBehaviour {
 			if (Physics.Raycast (eyePosition, tempDirection, out hit, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy"))) == false) {		
 //				Debug.Log (hit.collider);
 				hit.point = eyePosition + (tempDirection * viewDistance);
+				hits.Add (hit);
 			}
 			else {
 				if (hit.collider.tag == "Dog") {
 //					hit.point = eyePosition + (tempDirection * viewDistance);
 					seesDog = true;
-					dogC.observedArray[num-1] = false;
-					notice.GetComponent<MeshRenderer>().enabled = true;
-					Vector3 temp = new Vector3(transform.position.x,transform.position.y + 3,0);
+					dogC.observedArray [num - 1] = false;
+					notice.GetComponent<MeshRenderer> ().enabled = true;
+					Vector3 temp = new Vector3 (transform.position.x, transform.position.y + 3, 0);
 					notice.transform.position = temp;
+					hit.point = hit.collider.transform.position;
+					hits.Add (hit);
+//					if (Physics.Raycast (eyePosition, tempDirection, out hit, viewDistance, ~(1 << LayerMask.NameToLayer ("Interactable") | 1 << LayerMask.NameToLayer ("Enemy") | 1 << LayerMask.NameToLayer ("Dog"))) == false) {		
+//						//				Debug.Log (hit.collider);
+//						hit.point = eyePosition + (tempDirection * viewDistance);
+//
+//					}
+//					hits.Add (hit);
+
+				}
+				else {
+					hits.Add (hit);
 				}
 			}
 
-			hits.Add (hit);
+//			hits.Add (hit);
 
 			currAngle += 1f / coneQuality;
 		}
