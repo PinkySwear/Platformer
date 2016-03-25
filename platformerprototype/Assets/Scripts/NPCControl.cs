@@ -103,7 +103,7 @@ public class NPCControl : MonoBehaviour {
 				if(firstContact2){
 					firstContact2 = false;
 					if(!dogC.beginCutScene){
-						GetComponent<EnemyBehavior>().enabled = true;
+						GetComponent<EnemyBehavior>().enabled = false;
 						beginThirdNPCScene();
 					}
 				}
