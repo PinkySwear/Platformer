@@ -10,12 +10,14 @@ public class NPCControl : MonoBehaviour {
 	public GameObject door;
 	public GameObject elevator;
 	public GameObject options;
+	public GameObject camera;
 	public string message;
 	public int scene;
 	
 	private DogControls dogC;
 	private ItemInteraction doorC;
 	private ItemInteraction elevatorC;
+	private LightSoundControl cameraC;
 	private bool firstContact1 = true;
 	private bool firstContact2 = true;
 	private bool isDead;
@@ -27,6 +29,7 @@ public class NPCControl : MonoBehaviour {
 		dogC = dog.GetComponent<DogControls> ();
 		doorC = door.GetComponent<ItemInteraction> ();
 		elevatorC = elevator.GetComponent<ItemInteraction> ();
+		cameraC = camera.GetComponent<LightSoundControl> ();
 	}
 	
 	// Update is called once per frame
@@ -101,9 +104,10 @@ public class NPCControl : MonoBehaviour {
 			}
 			else if((NPC == 2) && seesDog){
 				if(firstContact2){
+					cameraC.finalBoss = true;
 					firstContact2 = false;
 					if(!dogC.beginCutScene){
-						GetComponent<EnemyBehavior>().enabled = false;
+						GetComponent<BossBehavior>().enabled = false;
 						beginThirdNPCScene();
 					}
 				}
@@ -179,7 +183,8 @@ public class NPCControl : MonoBehaviour {
 		if(scene == 9){
 			yield return new WaitForSeconds (5);
 			dogC.beginCutScene = false;
-			GetComponent<EnemyBehavior>().enabled = true;
+			GetComponent<BossBehavior>().enabled = true;
+			cameraC.fightBoss = true;
 			scene = 10;
 		}
 	}
