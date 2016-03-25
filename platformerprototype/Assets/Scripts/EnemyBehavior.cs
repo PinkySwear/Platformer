@@ -279,7 +279,11 @@ public class EnemyBehavior : MonoBehaviour {
 
 		}
 		else {
+<<<<<<< HEAD
 			notice.GetComponent<MeshRenderer>().enabled = false;
+=======
+			notice.GetComponent<MeshRenderer> ().enabled = false;
+>>>>>>> origin/master
 //			transform.rotation = Quaternion.Euler (0f, 0f, 90f);
 			if (timesincedeath < 0.01f) {
 				myRb.AddForce ((Vector3.up * 5f + Vector3.right * Mathf.Sign((transform.position - dog.transform.position).x) * 3f).normalized * 300f);
