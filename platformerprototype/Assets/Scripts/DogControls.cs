@@ -61,7 +61,7 @@ public class DogControls : MonoBehaviour {
 	public int level = 0;
 
 
-//	public Vector3 lastCheckpoint;
+	public Vector3 lastCheckpoint;
 
 	public GameObject infoObj;
 	private PlayerInfo myInfo;
@@ -80,16 +80,17 @@ public class DogControls : MonoBehaviour {
 
 		anim = GetComponent<Animator>();
 		textbox.GetComponent<Text>().text = "x 0";
-//		myInfo = infoObj.GetComponent<PlayerInfo> ();
+		myInfo = infoObj.GetComponent<PlayerInfo> ();
 //		GetComponent<Renderer>().material.mainTexture = walkSprite;
 
 		if (infoObj == null) {
 			infoObj = GameObject.Find ("PlayerInfo");
 		}
+		infoObj = GameObject.Find ("PlayerInfo");
 		myInfo = infoObj.GetComponent<PlayerInfo> ();
-		//Debug.Log (myInfo.lastCheckPoint);
+		Debug.Log (myInfo.lastCheckPoint);
 		//Debug.Log (myInfo.timeElapsed);
-		if (myInfo.lastCheckPoint == Vector3.zero) {
+		if (myInfo.lastCheckPoint.x == 0f && myInfo.lastCheckPoint.y == 0f) {
 			//Debug.Log ("setting spawn to level start");
 			myInfo.lastCheckPoint = initialSpawn.transform.position;
 		}
@@ -99,6 +100,7 @@ public class DogControls : MonoBehaviour {
 		myRb = GetComponent<Rigidbody> ();
 		myRb.freezeRotation = true;
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dog"), LayerMask.NameToLayer("Interactable"));
+		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Dog"), LayerMask.NameToLayer("Enemy"));
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Interactable"));
 		Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
 		myHealth = 5;
@@ -181,6 +183,7 @@ public class DogControls : MonoBehaviour {
 			health5.SetActive(true);
 		}
 		if (!isDead) {
+			
 			Vector3 right = transform.position + Vector3.right * transform.lossyScale.x * 0.25f + Vector3.down * 0.15f;
 			Vector3 left = transform.position - Vector3.right * transform.lossyScale.x * 0.25f + Vector3.down * 0.15f;
 
@@ -244,7 +247,7 @@ public class DogControls : MonoBehaviour {
 				}
 
 
-				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.1f && !gettingHit) {
+				if (Input.GetKey (KeyCode.A) && !crouching && onSomething && timesincelastattack > 0.5f && !gettingHit) {
 					biteSound.Play ();
 					if (nearEnemy) {
 						nearestEnemy.takeDamage (1);
